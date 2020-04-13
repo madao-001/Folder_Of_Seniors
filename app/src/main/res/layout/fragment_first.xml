@@ -1,0 +1,147 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    tools:context="ncu.folder_of_seniors.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/iv_search"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_search_bg">
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/iv_search"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:drawableLeft="@drawable/comui_search_small"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:text="Search" />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/biaoti"/>
+
+    <View android:layout_height="2px" android:background="#000000" android:layout_width="match_parent" android:layout_marginLeft="18dp" android:layout_marginRight="18dp"></View>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:descendantFocusability="blocksDescendants">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_margin="10dp"
+                    android:stretchColumns="0,1,2">
+
+                    <TableRow
+                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/img_btn_it"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/it"
+                            android:layout_margin="5dp"/>
+                        <ImageView
+                            android:id="@+id/img_btn_english"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/english"
+                            android:layout_margin="5dp"/>
+                        <ImageView
+                            android:id="@+id/img_btn_math"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/math"
+                            android:layout_margin="5dp"/>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_btn_politics"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/politics" />
+                        <ImageView
+                            android:id="@+id/img_btn_life"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/shenghuo"
+                            android:layout_margin="5dp"/>
+                        <ImageView
+                            android:id="@+id/img_btn_other"
+                            android:layout_width="0dp"
+                            android:layout_height="190dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/qita"
+                            android:layout_margin="5dp"/>
+                    </TableRow>
+                </TableLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sell_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
