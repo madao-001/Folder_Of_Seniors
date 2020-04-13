@@ -8,7 +8,7 @@ public class Resource extends BmobObject {
     private String title;
     private String type;
     private String desc;
-    private String creatorId;
+    private User creator;
     private Integer score;
     private Integer price;
     private BmobGeoPoint address;
@@ -18,63 +18,71 @@ public class Resource extends BmobObject {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Resource setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public Resource setType(String type) {
         this.type = type;
+        return this;
     }
 
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
+    public Resource setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
+        return this;
     }
 
     public Integer getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public Resource setScore(Integer score) {
         this.score = score;
+        return this;
     }
 
     public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public Resource setPrice(Integer price) {
         this.price = price;
+        return this;
     }
 
     public BmobGeoPoint getAddress() {
         return address;
     }
 
-    public void setAddress(BmobGeoPoint address) {
+    public Resource setAddress(BmobGeoPoint address) {
         this.address = address;
+        return this;
     }
 
     public BmobFile getPic() {
         return pic;
     }
 
-    public void setPic(BmobFile pic) {
+    public Resource setPic(BmobFile pic) {
         this.pic = pic;
+        return this;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public Resource setCreator(User creator) {
+        this.creator = creator;
+        return this;
     }
 }

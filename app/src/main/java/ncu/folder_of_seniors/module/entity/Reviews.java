@@ -3,40 +3,44 @@ package ncu.folder_of_seniors.module.entity;
 import cn.bmob.v3.BmobObject;
 
 public class Reviews extends BmobObject {
-    private String resourceId;
-    private String userId;
+    private Resource resource;
+    private User user;
     private Integer grade;
     private String desc;
-
-    public String getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(Integer grade) {
+    public Reviews setGrade(Integer grade) {
         this.grade = grade;
+        return this;
     }
 
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
+    public Reviews setDesc(String desc) {
         this.desc = desc;
+        return this;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public Reviews setResource(Resource resource) {
+        this.resource = resource;
+        return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Reviews setUser(User user) {
+        this.user = user;
+        return this;
     }
 }
