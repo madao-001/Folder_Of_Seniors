@@ -1,4 +1,4 @@
-package ncu.folder_of_seniors;
+package ncu.folder_of_seniors.module.ui;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -16,20 +16,27 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseActivity;
 import ncu.folder_of_seniors.base.BaseFragment;
+import ncu.folder_of_seniors.base.BaseView;
 import ncu.folder_of_seniors.module.ui.adapter.MyPagerAdapter;
 import ncu.folder_of_seniors.module.ui.anim.DepthPageTransformer;
 import ncu.folder_of_seniors.module.ui.fragment.FirstFragment;
 import ncu.folder_of_seniors.module.ui.fragment.FouthFragment;
 import ncu.folder_of_seniors.module.ui.fragment.SecondFragment;
 import ncu.folder_of_seniors.module.ui.fragment.ThirdFragment;
-import ncu.folder_of_seniors.module.ui.view.MainView;
 import ncu.folder_of_seniors.module.ui.widget.BottomBar;
 import ncu.folder_of_seniors.module.ui.widget.PopupMenuUtil;
 import ncu.folder_of_seniors.module.ui.widget.SimpleToolBar;
 
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements BaseView {
+
+    @BindView(R.id.bottomBar) BottomBar bottomBar;
+    @BindView(R.id.center_img) ImageView mCenterImage;
+    @BindView(R.id.simple_toolbar) SimpleToolBar simpleToolBar;
+    @BindView(R.id.main_content) ViewPager viewPager;
 
     //当Android6.0系统以上时，动态获取权限
     private static final String[] PERMISSIONS = new String[]{
@@ -46,15 +53,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private static final int PERMISSION_CODES = 1001;
     private boolean permissionGranted = true;
 
-    private BottomBar bottomBar;
-    private ImageView mCenterImage;
     private BaseFragment FirstF,SecondF,ThirdF,FouthF;
     private List<Fragment> fragmentList;
-    private ViewPager viewPager;
-    private SimpleToolBar simpleToolBar;
-
-    public MainActivity() {
-    }
 
     @Override
     protected int getLayoutId() {
@@ -62,8 +62,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    protected void init() {
-        initView();
+    protected void initViews() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermission();
         }
@@ -71,15 +70,10 @@ public class MainActivity extends BaseActivity implements MainView {
             Toast.makeText(this, "请打开权限", Toast.LENGTH_SHORT).show();
             return;
         }
-    }
 
-    public void initView() {
         //初始化Fragment
-        initToolbar();
         setStatusBar();
-        mCenterImage = (ImageView)findViewById (R.id.center_img);
         fragmentList = new ArrayList<>();
-        viewPager = (ViewPager)findViewById(R.id.main_content);
         FirstF = new FirstFragment();
         SecondF = new SecondFragment();
         ThirdF = new ThirdFragment();
@@ -92,12 +86,10 @@ public class MainActivity extends BaseActivity implements MainView {
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),fragmentList));
 
         //设置toolbar
-        simpleToolBar = (SimpleToolBar)findViewById(R.id.simple_toolbar);
         simpleToolBar.setMainTitle("首页");
 
         //滑动效果
         viewPager.setPageTransformer(true,new DepthPageTransformer());
-        bottomBar = (BottomBar)findViewById(R.id.bottomBar);
         //设置监听
         bottomBar.setOnBottombarOnclick(new BottomBar.OnBottonbarClick() {
             @Override
@@ -161,6 +153,11 @@ public class MainActivity extends BaseActivity implements MainView {
         });
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
     /**
      * 动态的进行权限请求
      */
@@ -189,10 +186,6 @@ public class MainActivity extends BaseActivity implements MainView {
         }
     }
 
-    public void initToolbar(){
-        simpleToolBar = (SimpleToolBar)findViewById(R.id.simple_toolbar);
-    }
-
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));//设置状态栏颜色
@@ -200,8 +193,4 @@ public class MainActivity extends BaseActivity implements MainView {
         }
     }
 
-    @Override
-    public void showData(String res) {
-
-    }
 }

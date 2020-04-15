@@ -13,6 +13,7 @@ public class Resource extends BmobObject {
     private Integer price;
     private BmobGeoPoint address;
     private BmobFile pic;
+    private BmobFile file;
 
     public String getTitle() {
         return title;
@@ -84,5 +85,13 @@ public class Resource extends BmobObject {
     public Resource setCreator(User creator) {
         this.creator = creator;
         return this;
+    }
+
+    public BmobFile getFile() {
+        return file;
+    }
+
+    public void setFile(BmobFile file) {
+        this.file = file;
     }
 }

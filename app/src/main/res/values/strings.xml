@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Folder_Of_Seniors</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <string name="text_editor_success">修改成功</string>
+    <string name="text_editor_failure">修改失败</string>
+    <string name="text_unknown">未知</string>
+    <string name="delete_focu">删除关注</string>
+    <string name="delete_release">删除发布</string>
+    <string name="delete_collect">删除收藏</string>
+    <string name="delete_fan">敬请期待</string>
+    <string name="menu_detail">查看详情</string>
 </resources>

@@ -4,7 +4,7 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobRelation;
 
 public class Follow extends BmobObject {
-    private User user;
+    private String userid;
     private BmobRelation following;
     private BmobRelation followers;
 
@@ -27,12 +27,12 @@ public class Follow extends BmobObject {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserid() {
+        return userid;
     }
 
-    public Follow setUser(User user) {
-        this.user = user;
+    public Follow setUserid(String userid) {
+        this.userid = userid;
         return this;
     }
 }

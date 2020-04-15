@@ -6,8 +6,13 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import ncu.folder_of_seniors.module.entity.User;
+import ncu.folder_of_seniors.module.service.UserInfoService;
+import ncu.folder_of_seniors.utils.StaticClass;
 
 import static ncu.folder_of_seniors.utils.StaticClass.BMOB_APP_ID;
+import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
 /**
  * @author oywj
@@ -18,6 +23,7 @@ public class MyApplication extends Application {
     public static Context appContext;
     public static ArrayList<Activity> activityList = new ArrayList<Activity>();
     public static MyApplication clientApp;
+    public static User clientUser;//当前登录用户
 
     @Override
     public void onCreate() {
@@ -25,6 +31,13 @@ public class MyApplication extends Application {
         appContext = getApplicationContext();
         clientApp = this;
         Bmob.initialize(this, BMOB_APP_ID);
+        clientUser = BmobUser.getCurrentUser(User.class);
+        if(clientUser!=null){
+            IS_LOGIN = true;
+        }else {
+            IS_LOGIN = false;
+        }
+
     }
 
     public static Context getClientAppContext(){

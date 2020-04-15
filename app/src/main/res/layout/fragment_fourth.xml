@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:background="@color/my_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="ncu.folder_of_seniors.MainActivity">
+    tools:context="ncu.folder_of_seniors.module.ui.MainActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
+        android:id="@+id/f4_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ncu.folder_of_seniors.module.ui.widget.MyScrollView
-            android:id="@+id/my_scroll_view"
+            android:id="@+id/f4_my_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -24,7 +24,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/activity_main"
+                    android:id="@+id/f4_activity_main"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/my_bg">
@@ -35,7 +35,7 @@
                         android:background="@drawable/topbg" />
 
                     <ImageView
-                        android:id="@+id/iv_settings"
+                        android:id="@+id/f4_iv_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -45,52 +45,52 @@
                         android:visibility="gone"/>
 
                     <RelativeLayout
-                        android:id="@+id/rl_un_login"
+                        android:id="@+id/f4_rl_un_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:visibility="visible">
 
                         <TextView
-                            android:id="@+id/tv_register"
+                            android:id="@+id/f4_tv_register"
                             style="@style/text_in_header"
                             android:paddingRight="16dp"
                             android:text="注册" />
 
                         <View
-                            android:id="@+id/divider1"
+                            android:id="@+id/f4_divider1"
                             style="@style/divider_vertical"
-                            android:layout_alignBottom="@+id/tv_login"
-                            android:layout_alignTop="@+id/tv_register"
-                            android:layout_toRightOf="@+id/tv_register"
+                            android:layout_alignBottom="@+id/f4_tv_login"
+                            android:layout_alignTop="@+id/f4_tv_register"
+                            android:layout_toRightOf="@+id/f4_tv_register"
                             android:background="@color/text_dark_gray" />
 
                         <TextView
-                            android:id="@+id/tv_login"
+                            android:id="@+id/f4_tv_login"
                             style="@style/text_in_header"
-                            android:layout_toRightOf="@+id/divider1"
+                            android:layout_toRightOf="@+id/f4_divider1"
                             android:paddingLeft="16dp"
                             android:text="登录" />
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/rl_login"
+                        android:id="@+id/f4_rl_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:visibility="gone">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/iv_header"
+                            android:id="@+id/f4_iv_header"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/my" />
 
                         <TextView
-                            android:id="@+id/tv_vip_level"
+                            android:id="@+id/f4_tv_vip_level"
                             style="@style/text_in_header"
-                            android:layout_below="@+id/iv_header"
+                            android:layout_below="@+id/f4_iv_header"
                             android:layout_centerHorizontal="true"
                             android:paddingTop="18dp"
                             android:text="铁牌会员" />
@@ -98,17 +98,17 @@
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/tv_vip_level"
+                            android:layout_below="@+id/f4_tv_vip_level"
                             android:paddingTop="18dp">
 
                             <TextView
-                                android:id="@+id/tv_nickname"
+                                android:id="@+id/f4_tv_nickname"
                                 style="@style/text_in_header"
                                 android:layout_centerHorizontal="true"
                                 android:text="Lotte" />
 
                             <TextView
-                                android:id="@+id/tv_vip_club"
+                                android:id="@+id/f4_tv_vip_club"
                                 android:layout_width="70dp"
                                 android:layout_height="22dp"
                                 android:layout_alignParentRight="true"
@@ -135,14 +135,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/iv_focus"
+                            android:id="@+id/f4_iv_following"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="2"
                             android:src="@drawable/guanzhu_on"/>
 
                         <TextView
-                            android:id="@+id/tv_focus"
+                            android:id="@+id/f4_tv_following"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -160,14 +160,14 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/iv_fans"
+                            android:id="@+id/f4_iv_followers"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="2"
                             android:src="@drawable/ziyuan_on"/>
 
                         <TextView
-                            android:id="@+id/tv_fans"
+                            android:id="@+id/f4_tv_followers"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -190,7 +190,7 @@
                             android:src="@drawable/jifen_on"/>
 
                         <TextView
-                            android:id="@+id/tv_jifen"
+                            android:id="@+id/f4_tv_points"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -205,7 +205,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/my_launch"
+                    android:id="@+id/f4_my_launch"
                     android:text="我发布的" />
                 <View
                     style="@style/divider"
@@ -213,7 +213,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/my_selled"
+                    android:id="@+id/f4_my_selled"
                     android:text="我卖出的" />
 
                 <View
@@ -222,7 +222,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/my_buy"
+                    android:id="@+id/f4_my_buy"
                     android:text="我买到的" />
 
                 <View
@@ -231,7 +231,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/my_star"
+                    android:id="@+id/f4_my_star"
                     android:text="我收藏的" />
 
                 <View
@@ -239,7 +239,7 @@
                     android:layout_marginLeft="16dp" />
 
                 <TextView
-                    android:id="@+id/add_jifen"
+                    android:id="@+id/f4_add_points"
                     style="@style/text_item"
                     android:text="增加100积分"
                     android:visibility="gone"/>
@@ -252,7 +252,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/security"
+                    android:id="@+id/f4_security"
                     android:text="账户与安全" />
 
                 <View
@@ -261,7 +261,7 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/tv_setting"
+                    android:id="@+id/f4_tv_setting"
                     android:text="设置" />
             </LinearLayout>
         </ncu.folder_of_seniors.module.ui.widget.MyScrollView>
@@ -272,7 +272,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <View
-        android:id="@+id/divider0"
+        android:id="@+id/f4_divider0"
         style="@style/divider"
         android:layout_below="@+id/toolbar"
         android:visibility="invisible" />

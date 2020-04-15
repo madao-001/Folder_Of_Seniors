@@ -26,4 +26,5 @@
 
     <color name="actionsheet_blue">#288cfc</color>
     <color name="my_bg">#FEFAF4</color>
+    <color name="transparent_background">#80ffffff</color>
 </resources>

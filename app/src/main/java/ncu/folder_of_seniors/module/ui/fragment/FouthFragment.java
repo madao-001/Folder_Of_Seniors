@@ -1,47 +1,75 @@
 package ncu.folder_of_seniors.module.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
+import butterknife.BindView;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseFragment;
-import ncu.folder_of_seniors.base.BaseView;
+import ncu.folder_of_seniors.base.InjectPresenter;
+import ncu.folder_of_seniors.module.ui.LoginActivity;
+import ncu.folder_of_seniors.module.ui.RegisterActivity;
+import ncu.folder_of_seniors.module.ui.SettingActivity;
+import ncu.folder_of_seniors.module.ui.view.FouthFView;
+import ncu.folder_of_seniors.module.ui.widget.MyScrollView;
+import ncu.folder_of_seniors.module.ui.widget.SelectPopupWindow;
+import ncu.folder_of_seniors.presenter.FouthFPresenter;
+import ncu.folder_of_seniors.utils.ToastEx;
 
-public class FouthFragment extends BaseFragment implements BaseView {
+import static android.app.Activity.RESULT_CANCELED;
+import static ncu.folder_of_seniors.app.MyApplication.clientUser;
+import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
+
+public class FouthFragment extends BaseFragment implements FouthFView {
     private View view;
     private Context context;
-//    private LoginFacade loginFacade;
-//
-//    /**
-//     * 退出
-//     */
-//    @BindView(R.id.btnLogout) Button btnLogout;
-//    @OnClick(R.id.btnLogout)
-//    public void logout(View view){
-//        switch (view.getId()){
-//            case R.id.btnLogout:
-//                loginFacade.logout(new OnNetResultListener() {
-//                    @Override
-//                    public void onSuccess(String result) {
-//                        //TODO:添加一个弹出对话框，询问是否确定退出
-//                        ClientApplication.exit();
-//                    }
-//                    @Override
-//                    public void onFault(String errorMsg) {
-//                        //TODO:添加一个弹出对话框，询问是否确定退出
-//                        ClientApplication.exit();
-//                    }
-//                });
-//
-//        }
-//    }
+    @InjectPresenter
+    private FouthFPresenter mPresenter;
+    @BindView(R.id.f4_tv_register) TextView tv_register;
+    @BindView(R.id.f4_tv_login) TextView tv_login;
+    @BindView(R.id.f4_my_scroll_view) MyScrollView my_scroll_view;
+    @BindView(R.id.f4_divider0) View divider0;
+    @BindView(R.id.f4_iv_settings) ImageView iv_settings;
+    @BindView(R.id.f4_iv_header) CircleImageView iv_header;
+    @BindView(R.id.f4_tv_nickname) TextView tv_nickname;
+    @BindView(R.id.f4_rl_un_login) RelativeLayout rl_un_login;
+    @BindView(R.id.f4_rl_login) RelativeLayout rl_login;
+    @BindView(R.id.f4_iv_following) ImageView iv_following;
+    @BindView(R.id.f4_iv_followers) ImageView iv_followers;
+    @BindView(R.id.f4_tv_following) TextView tv_following;
+    @BindView(R.id.f4_my_star) TextView my_star;
+    @BindView(R.id.f4_tv_followers) TextView tv_followers;
+    @BindView(R.id.f4_swipe_refresh) SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.f4_tv_points) TextView tv_points;
+    @BindView(R.id.f4_add_points) TextView add_points;
+    @BindView(R.id.f4_my_selled) TextView my_selled;
+    @BindView(R.id.f4_my_launch) TextView my_launch;
+    @BindView(R.id.f4_my_buy) TextView my_buy;
+    @BindView(R.id.f4_security) TextView security;
+    @BindView(R.id.f4_tv_setting) TextView tv_setting;
 
-    public FouthFragment() {
-    }
+    private float alphaHeight = 0;//透明度渐变的高度
+    public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
+    public static final int CAMERA_REQUEST_CODE = 100;
+    public static final int IMAGE_REQUEST_CODE = 101;
+    public static final int RESULT_REQUEST_CODE = 102;
+    public static final int POPWINDOW_REQUEST_CODE=103;
+    public static final int LOGIN_REQUEST_CODE=104;
+    public static final int REGISTER_REQUEST_CODE=105;
+    public FouthFragment() { }
 
     public static FouthFragment newInstance(String param1, String param2) {
         FouthFragment fragment = new FouthFragment();
@@ -56,7 +84,38 @@ public class FouthFragment extends BaseFragment implements BaseView {
 
     @Override
     protected void init() {
+        if(IS_LOGIN){
+            rl_login.setVisibility(View.VISIBLE);
+            rl_un_login.setVisibility(View.GONE);
+            iv_settings.setVisibility(View.VISIBLE);
 
+        }else {
+            rl_un_login.setVisibility(View.VISIBLE);
+            rl_login.setVisibility(View.GONE);
+            iv_settings.setVisibility(View.GONE);
+        }
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);   //设置下拉刷新进度条的颜色
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onResume();   //进行刷新操作
+                swipeRefresh.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        if(IS_LOGIN){
+            tv_nickname.setText(clientUser.getUsername());
+            tv_points.setText(clientUser.getPoints()+"积分");
+            //TODO 获取头像，获取关注和粉丝数
+            mPresenter.showData();
+        }else {
+            tv_points.setText("积分");
+            tv_following.setText("关注");
+            tv_followers.setText("粉丝");
+        }
     }
 
     @Override
@@ -69,23 +128,165 @@ public class FouthFragment extends BaseFragment implements BaseView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initData();
     }
 
-    public void onButtonPressed(Uri uri) {
+    @OnClick({R.id.f4_iv_settings,R.id.f4_tv_login,
+            R.id.f4_tv_register,R.id.f4_my_scroll_view,
+            R.id.f4_iv_header,R.id.f4_iv_followers,
+            R.id.f4_iv_following,R.id.f4_my_launch,
+            R.id.f4_my_buy,R.id.f4_my_selled,
+            R.id.f4_my_star,R.id.f4_security,
+            R.id.f4_tv_setting,R.id.f4_add_points})
+    public void onViewClick(View v){
+        Intent i = new Intent();
+        switch (v.getId()){
+            case R.id.f4_iv_settings:
+                i.setClass(getActivity(), SettingActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_tv_login:
+                i.setClass(getActivity(), LoginActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_tv_register:
+                i.setClass(getActivity(), SelectPopupWindow.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("btn1", "手机号注册");
+                bundle.putString("btn2", "邮箱注册");
+                bundle.putString("btn3", "取消");
+                i.putExtra("tag", bundle);
+                startActivityForResult(i,REGISTER_REQUEST_CODE);
+                break;
+            case R.id.f4_my_scroll_view:
+//                i.setClass(getActivity(), NoLicenseQueryActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.f4_iv_header:
+//                i.setClass(getActivity(), HotelQueryActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_iv_followers:
+//                i.setClass(getActivity(), HasInstalledHotelQueryActivity.class);
+//                startActivity(i);
+                break;
+            case R.id.f4_iv_following:
+//                i.setClass(getActivity(), MissHotelQueryActivity.class);
+//                startActivity(i);
+                mPresenter.addFollowing();
+                break;
+            case R.id.f4_my_launch:
+//                i.setClass(getActivity(), AlarmsQueryActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.f4_my_buy:
+//                i.setClass(getActivity(), StatAlarmsActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_my_selled:
+//                i.setClass(getActivity(), KeyPersonQueryActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_security:
+                i.putExtra("type","zdryyj");
+                startActivity(i);
+                break;
+            case R.id.f4_my_star:
+//                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
+                startActivity(i);
+                break;
+            case R.id.f4_tv_setting:
+                i.putExtra("type","zdryyj");
+                startActivity(i);
+                break;
+            case R.id.f4_add_points:
+//                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
+                startActivity(i);
+                break;
+        }
     }
 
-    private void initData() {
-
-    }
-
-    private void initView() {
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            super.onActivityResult(requestCode, resultCode, data);
+            switch (requestCode) {
+                case REGISTER_REQUEST_CODE:
+                    String returnedData = data.getStringExtra("data_return");
+                    Intent intent;
+                    Bundle bundle;
+                    if (returnedData != null) {
+                        switch (returnedData) {
+                            case "手机号注册":
+                                intent = new Intent();
+                                bundle = new Bundle();
+                                bundle.putString("type", "手机号注册");
+                                intent.putExtra("tag", bundle);
+                                intent.setClass(getActivity(),RegisterActivity.class);
+                                startActivity(intent);
+                                break;
+                            case "邮箱注册":
+                                intent = new Intent();
+                                bundle = new Bundle();
+                                bundle.putString("type", "邮箱注册");
+                                intent.putExtra("tag", bundle);
+                                intent.setClass(getActivity(),RegisterActivity.class);
+                                startActivity(intent);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case IMAGE_REQUEST_CODE:
+//                    startPhotoZoom(data.getData());
+                    break;
+                //相机数据
+                case CAMERA_REQUEST_CODE:
+//                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILE_NAME);
+//                    startPhotoZoom(Uri.fromFile(tempFile));
+                    break;
+                case RESULT_REQUEST_CODE:
+                    //有可能点击舍弃
+//                    if (data != null) {
+//                        //拿到图片设置
+//                        setImageToView(data);
+//                        //既然已经设置了图片，我们原先的就应该删除
+//                        if (tempFile != null) {
+//                            tempFile.delete();
+//                        }
+//                    }
+                    break;
+//                case LOGIN_REQUEST_CODE:
+//                    String fans = data.getStringExtra("fans");
+//                    String focus = data.getStringExtra("focus");
+//                    tv_fans.setText(fans+"粉丝");
+//                    tv_jifen.setText(user.getJifen()+"积分");
+//                    tv_focus.setText(focus+"关注");
+//                    break;
+                default:
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        init();
+        initData();
+    }
 
+
+    @Override
+    public void showData(int num1, int num2,int num3) {
+        tv_following.setText(num1+"关注");
+        tv_followers.setText(num2+"粉丝");
+        tv_points.setText(num3+"积分");
+    }
+
+    @Override
+    public void showErrorMessage(String msg) {
+        ToastEx.init(getContext(), ToastEx.Type.FAIL,msg, Toast.LENGTH_LONG,new Point(0,0)).show();
     }
 }

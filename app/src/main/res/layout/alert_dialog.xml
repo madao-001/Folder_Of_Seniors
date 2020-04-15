@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="bottom"
     android:orientation="vertical"
     >
 
     <LinearLayout
-        android:id="@+id/pop_layout"
+        android:id="@+id/alert_dialog_pop_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -19,7 +19,7 @@
 
 
         <Button
-            android:id="@+id/btn_paizhao"
+            android:id="@+id/alert_dialog_btn_first"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -27,7 +27,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_tuku"
+            android:id="@+id/alert_dialog_btn_second"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginTop="5dip"
@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_quxiao"
+            android:id="@+id/alert_dialog_btn_third"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginTop="5dip"

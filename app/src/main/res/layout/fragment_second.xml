@@ -5,18 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context="ncu.folder_of_seniors.MainActivity">
-
-    <TextView
-        android:id="@+id/tv_tiitle_second"
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:background="@color/colorPrimary"
-        android:text="同校资源"
-        android:textColor="@color/text_black"
-        android:textSize="20dp"/>
+    tools:context="ncu.folder_of_seniors.module.ui.MainActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_second"

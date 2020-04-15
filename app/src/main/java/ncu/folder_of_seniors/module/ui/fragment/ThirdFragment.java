@@ -60,6 +60,11 @@ public class ThirdFragment extends BaseFragment implements BaseView {
     }
 
     @Override
+    protected void initData() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -88,9 +93,6 @@ public class ThirdFragment extends BaseFragment implements BaseView {
     public void onButtonPressed(Uri uri) {
     }
 
-    private void initData() {
-
-    }
 
     private void initView() {
 
