@@ -27,6 +27,7 @@ import ncu.folder_of_seniors.presenter.impl.LoginPresenterImpl;
 import ncu.folder_of_seniors.utils.ToastEx;
 
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
+import static ncu.folder_of_seniors.app.MyApplication.fetchUserInfo;
 import static ncu.folder_of_seniors.module.ui.fragment.FouthFragment.REGISTER_REQUEST_CODE;
 import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
@@ -89,12 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void onLoginSeccess(String msg) {
         ToastEx.init(getContext(), ToastEx.Type.SUCCESS,msg,Toast.LENGTH_LONG,new Point(0,0)).show();
-        clientUser = BmobUser.getCurrentUser(User.class);
-        if(clientUser!=null){
-            IS_LOGIN = true;
-        }else {
-            IS_LOGIN = false;
-        }
+        fetchUserInfo();
         finish();
     }
 

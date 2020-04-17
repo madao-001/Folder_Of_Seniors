@@ -12,7 +12,17 @@ public interface FouthFView extends BaseView {
      */
     void showData(int num1,int num2,int num3);
     /**
+     * 显示头像
+     * @param picPath 图片地址
+     */
+    void showIcon(String picPath);
+    /**
      * 当数据请求异常，调用此接口提示
      */
     void showErrorMessage(String msg);
+    /**
+     * 获取图片地址
+     * @param picPath 图片地址
+     */
+    void getPicPath(String picPath);
 }

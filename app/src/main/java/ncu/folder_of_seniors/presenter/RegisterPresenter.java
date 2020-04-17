@@ -28,7 +28,7 @@ import ncu.folder_of_seniors.utils.Verify;
 public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel> implements RegisterPresenterImpl {
 
     @Override
-    public String userVerifyWithPhone(String username, String password, String password2, String age, Boolean sex, String phoneNo, String smsCode) {
+    public String userVerifyWithPhone(String username, String password, String password2, String age, Boolean sex, String phoneNo, String smsCode,String school) {
         if(Verify.isStrEmpty(phoneNo)){
             return "手机号不能为空！";
         }else if(!Verify.isMobile(phoneNo)){
@@ -37,6 +37,10 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
             return "用户名不能为空！";
         }else if (!Verify.isUserName(username)){
             return "用户名由大小写字母开头，且不少于六个字符！";
+        }else if(Verify.isStrEmpty(age)){
+            return "请输入年龄！";
+        }else if(!Verify.isAge(age)){
+            return "请输入正确的年龄！";
         }else if(Verify.isStrEmpty(password)){
             return "密码不能为空！";
         }else if (!Verify.isConsistsOfNum_Letter(password)){
@@ -45,10 +49,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
             return "请输入确认密码！";
         }else if(!password.equals(password2)){
             return "两次输入密码不一致！";
-        }else if(Verify.isStrEmpty(age)){
-            return "请输入年龄！";
-        }else if(!Verify.isAge(age)){
-            return "请输入正确的年龄！";
+        }else if(Verify.isStrEmpty(school)){
+            return "请输入学校名称！";
         }else if(sex == null){
             return "请选择性别！";
         }else if(Verify.isStrEmpty(smsCode)){
@@ -58,7 +60,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
     }
 
     @Override
-    public String userVerifyWithMail(String username, String password, String password2, String age, Boolean sex, String email) {
+    public String userVerifyWithMail(String username, String password, String password2, String age, Boolean sex, String email,String school) {
         if(Verify.isStrEmpty(email)){
             return "邮箱地址不能为空！";
         }else if(!Verify.isEmail(email)){
@@ -67,6 +69,10 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
             return "用户名不能为空！";
         }else if (!Verify.isUserName(username)){
             return "用户名由大小写字母开头，且不少于六个字符！";
+        }else if(Verify.isStrEmpty(age)){
+            return "请输入年龄！";
+        }else if(!Verify.isAge(age)){
+            return "请输入正确的年龄！";
         }else if(Verify.isStrEmpty(password)){
             return "密码不能为空！";
         }else if (!Verify.isConsistsOfNum_Letter(password)){
@@ -75,10 +81,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
             return "请输入确认密码！";
         }else if(!password.equals(password2)){
             return "两次输入密码不一致！";
-        }else if(Verify.isStrEmpty(age)){
-            return "请输入年龄！";
-        }else if(!Verify.isAge(age)){
-            return "请输入正确的年龄！";
+        }else if(Verify.isStrEmpty(school)){
+            return "请输入学校名称！";
         }else if(sex == null){
             return "请选择性别！";
         }

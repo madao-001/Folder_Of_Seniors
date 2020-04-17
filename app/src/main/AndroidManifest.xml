@@ -38,12 +38,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.ui.LoginActivity"/>
-        <activity android:name=".module.ui.RegisterActivity"/>
+        <activity android:name=".module.ui.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.RegisterActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".module.ui.widget.SelectPopupWindow"
-            android:theme="@style/MyDialogStyleBottom"/>
-        <activity android:name=".module.ui.SettingActivity"/>
-        <activity android:name=".module.ui.ChangeActivity"/>
+            android:theme="@style/MyDialogStyleBottom"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.ChangeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.LaunchActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="ncu.folder_of_seniors.BmobContentProvider">

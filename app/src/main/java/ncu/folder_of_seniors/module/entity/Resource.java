@@ -1,5 +1,8 @@
 package ncu.folder_of_seniors.module.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobGeoPoint;
@@ -11,8 +14,8 @@ public class Resource extends BmobObject {
     private User creator;
     private Integer score;
     private Integer price;
-    private BmobGeoPoint address;
-    private BmobFile pic;
+    private String school;
+    private List<String> photos=new ArrayList<>();
     private BmobFile file;
 
     public String getTitle() {
@@ -60,24 +63,6 @@ public class Resource extends BmobObject {
         return this;
     }
 
-    public BmobGeoPoint getAddress() {
-        return address;
-    }
-
-    public Resource setAddress(BmobGeoPoint address) {
-        this.address = address;
-        return this;
-    }
-
-    public BmobFile getPic() {
-        return pic;
-    }
-
-    public Resource setPic(BmobFile pic) {
-        this.pic = pic;
-        return this;
-    }
-
     public User getCreator() {
         return creator;
     }
@@ -91,7 +76,26 @@ public class Resource extends BmobObject {
         return file;
     }
 
-    public void setFile(BmobFile file) {
+    public Resource setFile(BmobFile file) {
         this.file = file;
+        return this;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public Resource setSchool(String school) {
+        this.school = school;
+        return this;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public Resource setPhotos(List<String> photos) {
+        this.photos = photos;
+        return this;
     }
 }

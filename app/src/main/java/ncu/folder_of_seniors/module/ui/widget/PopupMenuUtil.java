@@ -14,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import ncu.folder_of_seniors.R;
+import ncu.folder_of_seniors.module.ui.LaunchActivity;
+
+import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 
 
 public class PopupMenuUtil {
@@ -124,14 +127,14 @@ public class PopupMenuUtil {
                 //加号按钮点击之后的执行
                 _rlClickAction();
             } else {
-//                User user = User.getCurrentUser(User.class);
-//                if(user!=null){
-//                    Intent i = new Intent(context, LaunchActivity.class);
-//                    i.putExtra("index",index+"");
-//                    context.startActivity(i);
-//                }else {
-//                    Toast.makeText(context,"请先登录！", Toast.LENGTH_SHORT).show();
-//                }
+                if(clientUser!=null){
+                    Intent i = new Intent(context, LaunchActivity.class);
+                    i.putExtra("index",index+"");
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                    context.startActivity(i);
+                }else {
+                    Toast.makeText(context,"请先登录！", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

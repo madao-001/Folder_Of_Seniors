@@ -118,6 +118,17 @@
             android:textColor="@color/white"
             android:textColorHint="#ffffff"/>
 
+        <EditText
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:inputType="numberPassword"
+            android:id="@+id/register_et_school"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:hint="请输入学校官方名称"
+            android:textColor="@color/white"
+            android:textColorHint="#ffffff"/>
+
         <LinearLayout
             android:id="@+id/register_ll_SMScode"
             android:layout_width="match_parent"

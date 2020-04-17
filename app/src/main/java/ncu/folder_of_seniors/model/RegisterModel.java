@@ -84,7 +84,7 @@ public class RegisterModel extends BaseModel implements RegisterModelImpl {
 
     @Override
     public void requestSMSCode(String phoneNo, RegisterLisentener lisentener) {
-        BmobSMS.requestSMSCode(phoneNo, "", new QueryListener<Integer>() {
+        BmobSMS.requestSMSCode(phoneNo, "学长的文件夹", new QueryListener<Integer>() {
             @Override
             public void done(Integer smsId, BmobException e) {
                 if (e == null) {

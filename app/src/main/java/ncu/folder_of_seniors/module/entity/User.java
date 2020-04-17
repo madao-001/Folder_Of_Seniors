@@ -12,7 +12,7 @@ public class User extends BmobUser {
     private Boolean sex;
     private BmobFile icon;
     private Integer points;
-    private BmobGeoPoint address;
+    private String school;
     private String grand;
     private List<String> tags;
     private Boolean isOnline;
@@ -60,15 +60,6 @@ public class User extends BmobUser {
         return this;
     }
 
-    public BmobGeoPoint getAddress() {
-        return address;
-    }
-
-    public User setAddress(BmobGeoPoint address) {
-        this.address = address;
-        return this;
-    }
-
     public User setIcon(BmobFile icon) {
         this.icon = icon;
         return this;
@@ -84,6 +75,15 @@ public class User extends BmobUser {
 
     public User setTags(List<String> tags) {
         this.tags = tags;
+        return this;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public User setSchool(String school) {
+        this.school = school;
         return this;
     }
 }

@@ -1,41 +1,39 @@
 package ncu.folder_of_seniors.module.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseFragment;
+import ncu.folder_of_seniors.module.entity.Resource;
 
 
 public class FirstFragment extends BaseFragment {
     private Context context;
 
-//    private TouristQueryFacade touristQueryFacade;
-//    private PublicFacade publicFacade;
-//    List<String> imgUrls = new ArrayList<>();
-//
-//
-//    @BindView(R.id.ll_first_jnlkcx) LinearLayout ll_jnlkcx;
-//    @BindView(R.id.ll_first_jwlkcx) LinearLayout ll_jwlkcx;
-//    @BindView(R.id.ll_first_rzhycx) LinearLayout ll_rzhycx;
-//    @BindView(R.id.ll_first_wzhycx) LinearLayout ll_wzhycx;
-//
-//    @BindView(R.id.ll_first_lgcx) LinearLayout ll_lgcx;
-//    @BindView(R.id.ll_first_yazlgcx) LinearLayout ll_yazlgcx;
-//    @BindView(R.id.ll_first_wbzxxcx) LinearLayout ll_wbzxxcx;
-//
-//    @BindView(R.id.ll_first_jnbjcx) LinearLayout ll_jnbjcx;
-//    @BindView(R.id.ll_first_jnbjtj) LinearLayout ll_jnbjtj;
-//    @BindView(R.id.ll_first_cjgl) LinearLayout ll_first_cjgl;
-//
-//    @BindView(R.id.ll_first_bkgl) LinearLayout ll_bkgl;
-//    @BindView(R.id.ll_first_zdrycx) LinearLayout ll_zdrycx;
-//    @BindView(R.id.ll_first_zdryyj) LinearLayout ll_zdryyj;
-//    @BindView(R.id.ll_first_yzdzcx) LinearLayout ll_yzdzcx;
-//    @BindView(R.id.autoViewPager_first) AutoViewPager autoViewPager;
+    @BindView(R.id.f1_iv_search) ImageView iv_search;
+    @BindView(R.id.f1_img_btn_it) ImageView ll_jwlkcx;
+    @BindView(R.id.f1_img_btn_english) ImageView ll_rzhycx;
+    @BindView(R.id.f1_img_btn_math) ImageView ll_wzhycx;
+    @BindView(R.id.f1_img_btn_politics) ImageView ll_lgcx;
+    @BindView(R.id.f1_img_btn_life) ImageView ll_yazlgcx;
+    @BindView(R.id.f1_img_btn_other) ImageView ll_wbzxxcx;
+    @BindView(R.id.f1_resource_lv) RecyclerView resource_lv;
+    @BindView(R.id.f1_swipe_refresh) SwipeRefreshLayout swipeRefresh;
 
+    private List<Resource> mList = new ArrayList<>();
+    private Intent intent;
 
     public FirstFragment() { }
 

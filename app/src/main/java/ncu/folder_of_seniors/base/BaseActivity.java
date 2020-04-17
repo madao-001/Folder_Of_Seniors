@@ -1,7 +1,12 @@
 package ncu.folder_of_seniors.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
+
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.Field;
@@ -10,6 +15,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.app.MyApplication;
 
 /**
@@ -19,6 +25,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
 
     private final static String TAG=BaseActivity.class.getName();
     protected Unbinder unbinder;
+    private AlertDialog alertDialog;
     /**
      * 保存使用注解的 Presenter ，用于解绑
      */
@@ -60,9 +67,31 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
                 }
             }
         }
-
-        initViews();
         initData();
+        initViews();
+    }
+
+    public void showLoadingDialog() {
+        alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading_alert);
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public void dismissLoadingDialog() {
+        if (null != alertDialog && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
     }
 
     @Override

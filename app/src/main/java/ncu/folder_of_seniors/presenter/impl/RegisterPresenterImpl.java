@@ -7,12 +7,12 @@ public interface RegisterPresenterImpl extends BasePresenterImpl {
     /**
      * 输入验证1
      */
-    public String userVerifyWithPhone(String username, String password,String password2,String age,Boolean sex,String phoneNo,String smsCode);
+    public String userVerifyWithPhone(String username, String password,String password2,String age,Boolean sex,String phoneNo,String smsCode,String school);
 
     /**
      * 输入验证2
      */
-    public String userVerifyWithMail(String username, String password,String password2,String age,Boolean sex,String email);
+    public String userVerifyWithMail(String username, String password,String password2,String age,Boolean sex,String email,String school);
 
     /**
      * 获取手机验证码

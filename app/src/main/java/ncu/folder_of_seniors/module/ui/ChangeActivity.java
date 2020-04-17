@@ -19,6 +19,7 @@ import ncu.folder_of_seniors.utils.ToastEx;
 import ncu.folder_of_seniors.utils.Verify;
 
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
+import static ncu.folder_of_seniors.app.MyApplication.fetchUserInfo;
 
 public class ChangeActivity extends BaseActivity implements ChangeView {
 
@@ -90,6 +91,8 @@ public class ChangeActivity extends BaseActivity implements ChangeView {
     @Override
     public void showSuccessMessage(String msg) {
         ToastEx.init(getContext(), ToastEx.Type.SUCCESS,msg, Toast.LENGTH_LONG,new Point(0,0)).show();
+        fetchUserInfo();
+        finish();
     }
 
     @Override

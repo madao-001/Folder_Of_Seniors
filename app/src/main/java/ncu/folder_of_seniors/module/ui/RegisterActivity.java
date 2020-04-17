@@ -38,6 +38,7 @@ import ncu.folder_of_seniors.utils.ToastEx;
 import ncu.folder_of_seniors.utils.Verify;
 
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
+import static ncu.folder_of_seniors.app.MyApplication.fetchUserInfo;
 import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {
@@ -51,6 +52,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     @BindView(R.id.register_toolbar4) Toolbar toolbar;
     @BindView(R.id.register_tv_info) TextView mTvInfo;
     @BindView(R.id.register_et_no) EditText no;
+    @BindView(R.id.register_et_school) EditText et_school;
     @BindView(R.id.register_et_password) EditText password;
     @BindView(R.id.register_et_password2) EditText password2;
     @BindView(R.id.register_et_age) EditText Age;
@@ -132,6 +134,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
         Integer age = Integer.parseInt(Age.getText().toString());
         String username = name.getText().toString();
         String mail = no.getText().toString();
+        String school = et_school.getText().toString();
         User user = new User();
         if(type.equals("手机号注册")){
             user.setUsername(username);
@@ -139,6 +142,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setMobilePhoneNumber(phoneNo);
             user.setAge(age);
             user.setOnline(true);
+            user.setSchool(school);
             user.setSex(sex);
             user.setPoints(0);
         }else if(type.equals("邮箱注册")){
@@ -147,6 +151,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setEmail(mail);
             user.setAge(age);
             user.setOnline(true);
+            user.setSchool(school);
             user.setSex(sex);
             user.setPoints(0);
         }
@@ -156,12 +161,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     @Override
     public void onRegisterSeccess(String msg) {
         ToastEx.init(getContext(), ToastEx.Type.SUCCESS,msg, Toast.LENGTH_LONG,new Point(0,0)).show();
-        clientUser = BmobUser.getCurrentUser(User.class);
-        if(clientUser!=null){
-            IS_LOGIN = true;
-        }else {
-            IS_LOGIN = false;
-        }
+        fetchUserInfo();
         finish();
     }
 
@@ -201,9 +201,10 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                 String age = Age.getText().toString();
                 String username = name.getText().toString();
                 String smscode = smsCode.getText().toString();
+                String school = et_school.getText().toString();
                 String mail = no.getText().toString();
                 if(type.equals("手机号注册")){
-                    String msg = mPresenter.userVerifyWithPhone(username,pwd,pwd2,age,sex,phoneNo,smscode);
+                    String msg = mPresenter.userVerifyWithPhone(username,pwd,pwd2,age,sex,phoneNo,smscode,school);
                     if(msg.equals("SUCCESS")){
                         mPresenter.registerWithPhone(smscode);
                     }else {
@@ -211,7 +212,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                                 Toast.LENGTH_SHORT).show();
                     }
                 }else if(type.equals("邮箱注册")){
-                    String msg = mPresenter.userVerifyWithMail(username,pwd,pwd2,age,sex,mail);
+                    String msg = mPresenter.userVerifyWithMail(username,pwd,pwd2,age,sex,mail,school);
                     if(msg.equals("SUCCESS")){
                         mPresenter.registerWithEmail();
                     }else {

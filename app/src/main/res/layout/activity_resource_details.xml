@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/bar"></include>
+R
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:layout_above="@+id/bottomBar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:focusableInTouchMode="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <ImageView
+                    android:id="@+id/seller_icon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/my" />
+
+                <TextView
+                    android:id="@+id/seller_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="72dp"
+                    android:textColor="@color/black"
+                    android:text="test"
+                    android:textSize="28dp" />
+
+                <TextView
+                    android:id="@+id/sell_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="texttime"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorTextGary" />
+
+            </RelativeLayout>
+            <View
+                style="@style/divider"
+                android:layout_marginTop="5dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:id="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/holo_red_light"
+                    android:textSize="23dp"/>
+
+                <TextView
+                    android:id="@+id/sell_price"
+                    android:layout_toRightOf="@+id/money"
+                    android:layout_alignBottom="@+id/money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9999"
+                    android:textColor="@color/holo_red_light"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/sell_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:textSize="30dp"
+                android:ellipsize="end"/>
+            <LinearLayout
+                android:id="@+id/photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:id="@+id/bottombar"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/first"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/tab_like_click"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="left|center"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/supportbefore" />
+
+                <TextView
+                    android:id="@+id/tab_support_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_marginBottom="2dp"
+                    android:text="点赞"
+                    android:textSize="10dp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/second"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/tab_message_click"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="left|center"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/message" />
+
+                <TextView
+                    android:id="@+id/tab_message_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_marginBottom="2dp"
+                    android:text="聊天"
+                    android:textSize="10dp"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/third"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/tab_star_click"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="left|center"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/collectionbefore" />
+
+                <TextView
+                    android:id="@+id/tab_collection_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_marginBottom="2dp"
+                    android:text="收藏"
+                    android:textSize="10dp"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fourth"
+                android:layout_width="0dp"
+                android:layout_height="85dp"
+                android:layout_weight="3">
+
+
+                <Button
+                    android:id="@+id/tab_want_click"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#FFCC00"
+                    android:text="购买" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

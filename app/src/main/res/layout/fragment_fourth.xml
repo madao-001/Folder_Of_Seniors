@@ -36,8 +36,8 @@
 
                     <ImageView
                         android:id="@+id/f4_iv_settings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="16dp"
                         android:layout_marginRight="16dp"
@@ -81,7 +81,7 @@
                         android:visibility="gone">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/f4_iv_header"
+                            android:id="@+id/f4_iv_icon"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_centerHorizontal="true"
@@ -90,7 +90,7 @@
                         <TextView
                             android:id="@+id/f4_tv_vip_level"
                             style="@style/text_in_header"
-                            android:layout_below="@+id/f4_iv_header"
+                            android:layout_below="@+id/f4_iv_icon"
                             android:layout_centerHorizontal="true"
                             android:paddingTop="18dp"
                             android:text="铁牌会员" />

@@ -1,11 +1,14 @@
 package ncu.folder_of_seniors.module.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,21 +17,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseActivity;
 import ncu.folder_of_seniors.base.InjectPresenter;
+import ncu.folder_of_seniors.module.ui.view.FouthFView;
 import ncu.folder_of_seniors.module.ui.view.SettingView;
 import ncu.folder_of_seniors.module.ui.widget.SelectPopupWindow;
+import ncu.folder_of_seniors.presenter.FouthFPresenter;
 import ncu.folder_of_seniors.presenter.SettingPresenter;
 import ncu.folder_of_seniors.utils.ToastEx;
 
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
-public class SettingActivity extends BaseActivity implements SettingView {
+public class SettingActivity extends BaseActivity implements SettingView, FouthFView {
 
     @BindView(R.id.setting_tv_un_login) TextView tv_un_login;
     @BindView(R.id.setting_tv_username2) TextView tv_username;
@@ -39,6 +46,8 @@ public class SettingActivity extends BaseActivity implements SettingView {
     @BindView(R.id.setting_iv_icon) ImageView iv_icon;
     @InjectPresenter
     private SettingPresenter mPresenter;
+    @InjectPresenter
+    private FouthFPresenter mPresenter2;
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
     public static final int CAMERA_REQUEST_CODE = 100;
     public static final int IMAGE_REQUEST_CODE = 101;
@@ -55,16 +64,18 @@ public class SettingActivity extends BaseActivity implements SettingView {
 
     @Override
     protected void initViews() {
-        tv_username.setText(clientUser.getUsername());
-        tv_age.setText(clientUser.getAge()+"");
+        //TODO 显示头像 添加学校选择
+
 //        if (user.getImage()!=null){
-//            UtilTools.getImage(context,iv_header,user.getImage());
+//            UtilTools.getImage(context,iv_icon,user.getImage());
 //        }
     }
 
     @Override
     protected void initData() {
-
+        tv_username.setText(clientUser.getUsername());
+        tv_age.setText(clientUser.getAge()+"");
+        mPresenter2.showIcon();
     }
 
     @OnClick({R.id.setting_tv_un_login,R.id.setting_rl_username,
@@ -73,7 +84,7 @@ public class SettingActivity extends BaseActivity implements SettingView {
         switch (v.getId()) {
             case R.id.setting_rl_username:
                 intent = new Intent(this, ChangeActivity.class);
-                intent.putExtra("type","nickName");
+                intent.putExtra("type","username");
                 startActivity(intent);
                 break;
             case R.id.setting_rl_age:
@@ -82,10 +93,10 @@ public class SettingActivity extends BaseActivity implements SettingView {
                 startActivity(intent);
                 break;
             case R.id.setting_rl_icon:
-                intent.setClass(getContext(), SelectPopupWindow.class);
+                intent = new Intent(this, SelectPopupWindow.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("btn1", "拍照");
-                bundle.putString("btn2", "相册");
+                bundle.putString("btn2", "图库");
                 bundle.putString("btn3", "取消");
                 intent.putExtra("tag", bundle);
                 startActivityForResult(intent,POPWINDOW_REQUEST_CODE);
@@ -119,24 +130,24 @@ public class SettingActivity extends BaseActivity implements SettingView {
                         }
                     }
                     break;
-//                case IMAGE_REQUEST_CODE:
-//                    startPhotoZoom(data.getData());
-//                    break;
-//                //相机数据
-//                case CAMERA_REQUEST_CODE:
-//                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILE_NAME);
-//                    startPhotoZoom(Uri.fromFile(tempFile));
-//                    break;
-//                case RESULT_REQUEST_CODE:
-//                    //有可能点击舍弃
-//                    if (data != null) {
-//                        //拿到图片设置
-//                        setImageToView(data);
-//                        //既然已经设置了图片，我们原先的就应该删除
-//                        if (tempFile != null) {
-//                            tempFile.delete();
-//                        }
-//                    }
+                case IMAGE_REQUEST_CODE:
+                    startPhotoZoom(data.getData());
+                    break;
+                //相机数据
+                case CAMERA_REQUEST_CODE:
+                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILE_NAME);
+                    startPhotoZoom(Uri.fromFile(tempFile));
+                    break;
+                case RESULT_REQUEST_CODE:
+                    //有可能点击舍弃
+                    if (data != null) {
+                        //拿到图片设置
+                        setImageToView(data);
+                        //既然已经设置了图片，我们原先的就应该删除
+                        if (tempFile != null) {
+                            tempFile.delete();
+                        }
+                    }
                 default:
             }
         }
@@ -158,6 +169,69 @@ public class SettingActivity extends BaseActivity implements SettingView {
         startActivityForResult(intent, IMAGE_REQUEST_CODE);
     }
 
+    //裁剪
+    private void startPhotoZoom(Uri uri) {
+        if (uri == null) {
+            Log.e("startPhotoZoom","uri == null");
+            return;
+        }
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        //设置裁剪
+        intent.putExtra("crop", "true");
+        //裁剪宽高比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //裁剪图片的质量
+        intent.putExtra("outputX", 320);
+        intent.putExtra("outputY", 320);
+        //发送数据
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, RESULT_REQUEST_CODE);
+    }
+
+    //设置图片
+    private void setImageToView(Intent data) {
+        Bundle bundle = data.getExtras();
+        if (bundle != null) {
+            Bitmap bitmap = bundle.getParcelable("data");
+            iv_icon.setImageBitmap(bitmap);
+            //保存
+            mPresenter2.savePic(bitmap);
+            Log.e("savePic","start");
+        }
+    }
+
+    /**
+     * 加载本地图片
+     * @param url
+     * @return
+     */
+    public static Bitmap getLoacalBitmap(String url) {
+        try {
+            FileInputStream fis = new FileInputStream(url);
+            return BitmapFactory.decodeStream(fis);  ///把流转化为Bitmap图片
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void showData(int num1, int num2, int num3) {
+
+    }
+
+    @Override
+    public void showIcon(String picPath) {
+        if(picPath.equals("")||picPath == null){
+
+        }else {
+            Bitmap bitmap = getLoacalBitmap(picPath); //从本地取图片(在cdcard中获取)  //
+            iv_icon .setImageBitmap(bitmap); //设置Bitmap
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -183,5 +257,11 @@ public class SettingActivity extends BaseActivity implements SettingView {
     @Override
     public void showErrorMessage(String msg) {
         ToastEx.init(getContext(), ToastEx.Type.FAIL,msg, Toast.LENGTH_LONG,new Point(0,0)).show();
+    }
+
+    @Override
+    public void getPicPath(String picPath) {
+        mPresenter2.updateIcon(picPath);
+        Log.e("savePic","start4"+picPath);
     }
 }
