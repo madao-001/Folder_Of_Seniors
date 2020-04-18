@@ -22,7 +22,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends RxFragment implements BaseView{
 
     private final static String TAG=BaseActivity.class.getName();
-
     protected View view;
     protected Unbinder unbinder;
     private List<BasePresenter> mInjectPresenters;

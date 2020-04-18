@@ -46,6 +46,8 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
     @BindView(R.id.setting_rl_age) RelativeLayout rl_age;
     @BindView(R.id.setting_rl_icon) RelativeLayout rl_icon;
     @BindView(R.id.setting_iv_icon) ImageView iv_icon;
+    @BindView(R.id.setting_rl_school) RelativeLayout rl_school;
+    @BindView(R.id.setting_tv_school) TextView tv_school;
     @InjectPresenter private SettingPresenter mPresenter;
     @InjectPresenter private FouthFPresenter mPresenter2;
 
@@ -65,22 +67,20 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
 
     @Override
     protected void initViews() {
-        //TODO 添加学校选择
 
-//        if (user.getImage()!=null){
-//            UtilTools.getImage(context,iv_icon,user.getImage());
-//        }
     }
 
     @Override
     protected void initData() {
         tv_username.setText(clientUser.getUsername());
         tv_age.setText(clientUser.getAge()+"");
+        tv_school.setText(clientUser.getSchool());
         mPresenter2.showIcon();
     }
 
     @OnClick({R.id.setting_tv_un_login,R.id.setting_rl_username,
-                R.id.setting_rl_age,R.id.setting_rl_icon})
+                R.id.setting_rl_age,R.id.setting_rl_icon,
+            R.id.setting_rl_school})
     public void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.setting_rl_username:
@@ -91,6 +91,11 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
             case R.id.setting_rl_age:
                 intent = new Intent(this, ChangeActivity.class);
                 intent.putExtra("type","age");
+                startActivity(intent);
+                break;
+            case R.id.setting_rl_school:
+                intent = new Intent(this, ChangeActivity.class);
+                intent.putExtra("type","school");
                 startActivity(intent);
                 break;
             case R.id.setting_rl_icon:

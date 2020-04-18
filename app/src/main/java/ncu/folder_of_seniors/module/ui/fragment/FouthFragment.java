@@ -112,7 +112,8 @@ public class FouthFragment extends BaseFragment implements FouthFView {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onResume();   //进行刷新操作
+                init();
+                initData();
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -303,13 +304,6 @@ public class FouthFragment extends BaseFragment implements FouthFView {
                 default:
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        init();
-        initData();
     }
 
 

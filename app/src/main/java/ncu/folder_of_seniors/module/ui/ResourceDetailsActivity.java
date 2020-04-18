@@ -25,6 +25,7 @@ import ncu.folder_of_seniors.base.InjectPresenter;
 import ncu.folder_of_seniors.module.entity.Resource;
 import ncu.folder_of_seniors.module.entity.User;
 import ncu.folder_of_seniors.module.ui.view.ResourceDetailsView;
+import ncu.folder_of_seniors.module.ui.widget.MyDialog;
 import ncu.folder_of_seniors.module.ui.widget.SimpleToolBar;
 import ncu.folder_of_seniors.presenter.ResourceDetailsPresenter;
 import ncu.folder_of_seniors.utils.ToastEx;
@@ -173,7 +174,7 @@ public class ResourceDetailsActivity extends BaseActivity implements ResourceDet
                             if(isBuy){
                                 Toast.makeText(getContext(),"不可重复购买！", Toast.LENGTH_SHORT).show();
                             }else {
-                                //TODO 添加购买界面
+                                buyOnClick();
                             }
                         }
                     }else {
@@ -226,7 +227,31 @@ public class ResourceDetailsActivity extends BaseActivity implements ResourceDet
                 }
                 break;
             case "buy":
+                isBuy=true;
+                btn_want.setText("已购买");
+                btn_want.setBackgroundColor(btn_want.getResources().getColor(R.color.colorPrimary));
+                btn_want.setTextColor(btn_want.getResources().getColor(R.color.text_gray));
                 break;
         }
+    }
+
+    public void buyOnClick(){
+        new MyDialog(ResourceDetailsActivity.this).builder().setTitle("购买资源")
+                .setMsg("购买该资源后将扣除"+resource.getPrice()+"点积分，确定购买？")
+                .setPositiveButton("确认购买", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(clientUser.getPoints()<resource.getPrice())
+                            Toast.makeText(getContext(),"积分不足！", Toast.LENGTH_SHORT).show();
+                        else
+                            mPresenter.setUserAction(resource,clientUser,"buy",true);
+                    }
+                })
+                .setNegativeButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).show();
     }
 }

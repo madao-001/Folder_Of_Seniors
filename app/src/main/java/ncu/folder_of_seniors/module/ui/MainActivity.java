@@ -31,6 +31,8 @@ import ncu.folder_of_seniors.module.ui.widget.BottomBar;
 import ncu.folder_of_seniors.module.ui.widget.PopupMenuUtil;
 import ncu.folder_of_seniors.module.ui.widget.SimpleToolBar;
 
+import static ncu.folder_of_seniors.app.MyApplication.clientUser;
+
 public class MainActivity extends BaseActivity implements BaseView {
 
     @BindView(R.id.bottomBar) BottomBar bottomBar;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import ncu.folder_of_seniors.base.BasePresenter;
 import ncu.folder_of_seniors.model.FirstFModel;
+import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.model.Lisentener.FirstFLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 import ncu.folder_of_seniors.model.Lisentener.ResouceDetailsLisentener;
@@ -72,6 +73,18 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                     @Override
                     public void onFails(String msg) {
                         getView().showErrorMessage(msg);
+                    }
+                });
+            }else if(type.equals("buy")){
+                getModel().updatePoints(user.getObjectId(), resource, new BaseLisentener() {
+                    @Override
+                    public void onSeccess() {
+
+                    }
+
+                    @Override
+                    public void onFails(String msg) {
+                        getView().showErrorMessage("购买失败："+msg);
                     }
                 });
             }

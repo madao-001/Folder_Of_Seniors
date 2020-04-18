@@ -46,6 +46,10 @@ public class ChangeActivity extends BaseActivity implements ChangeView {
                 tv_change.setText("更改年龄");
                 et_change.setText(clientUser.getAge()+"");
                 break;
+            case "school":
+                tv_change.setText("更改学校");
+                et_change.setText(clientUser.getSchool());
+                break;
         }
     }
 
@@ -81,6 +85,16 @@ public class ChangeActivity extends BaseActivity implements ChangeView {
                             Toast.makeText(getContext(),"请输入正确的年龄！",Toast.LENGTH_SHORT).show();
                         }else {
                             mPresenter.changeData(data2,type);
+                        }
+                        break;
+                    case "school":
+                        String data3 = et_change.getText().toString();
+                        if(Verify.isStrEmpty(data3)){
+                            Toast.makeText(getContext(),"请输入更改后的数据！",Toast.LENGTH_SHORT).show();
+                        }else if(!Verify.isChinese(data3)){
+                            Toast.makeText(getContext(),"请输入正确的学校全称",Toast.LENGTH_SHORT).show();
+                        }else {
+                            mPresenter.changeData(data3,type);
                         }
                         break;
                 }

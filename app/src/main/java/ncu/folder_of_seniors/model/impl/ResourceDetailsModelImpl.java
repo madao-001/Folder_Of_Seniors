@@ -1,6 +1,9 @@
 package ncu.folder_of_seniors.model.impl;
 
 
+import org.json.JSONException;
+
+import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.model.Lisentener.FirstFLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 import ncu.folder_of_seniors.model.Lisentener.ResouceDetailsLisentener;
@@ -15,4 +18,5 @@ public interface ResourceDetailsModelImpl {
     void setUserAction(UserAction action,RegisterLisentener lisentener);
     void deleteUserAction(UserAction action,RegisterLisentener lisentener);
     void changeLike(Resource resource,Integer num,RegisterLisentener lisentener);
+    void updatePoints(String userid,Resource resource, BaseLisentener lisentener);
 }
