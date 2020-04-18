@@ -33,7 +33,6 @@ public class FirstFAdapter extends RecyclerView.Adapter<FirstFAdapter.VH>impleme
     private Context mContext;
     private Resource data;
     private User user;
-
     private FirstFAdapter.Callback mCallback;
 
     /**
@@ -86,41 +85,18 @@ public class FirstFAdapter extends RecyclerView.Adapter<FirstFAdapter.VH>impleme
         data=mDatas.get(position);
         user = data.getCreator();
         holder.tv_nickName.setText(user.getUsername());
-        if(data.getTitle()!=null){
-            holder.tv_title.setText(data.getTitle());
+        holder.tv_title.setText(data.getTitle());
+        if(data.getCreator().getIcon()!=null){
+            Glide.with(mContext).load(data.getCreator().getIcon()).into(holder.iv_head);
         }
-        if(data.getDesc()!=null){
-            holder.tv_content.setText(data.getDesc());
-        }
+        holder.tv_content.setText(data.getDesc());
         holder.tv_price.setText(data.getPrice()+"");
         holder.tv_time.setText(data.getUpdatedAt()+"");
         holder.tv_comment.setText("0");
-
-        // 查询喜欢这个帖子的所有用户，因此查询的是用户表
-        BmobQuery<User> query2 = new BmobQuery<User>();
-        Resource Resource = new Resource();
-        Resource.setObjectId(data.getObjectId());
-        //likes是Resource表中的字段，用来存储所有喜欢该帖子的用户
-        query2.addWhereRelatedTo("likes", new BmobPointer(Resource));
-        query2.findObjects(new FindListener<User>() {
-
-            @Override
-            public void done(List<User> object, BmobException e) {
-                if(e==null){
-                    holder.tv_like.setText(object.size()+"");
-                }else{
-                    Toast.makeText(mContext,"查询喜欢失败:"+e, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-        });
+        holder.tv_like.setText(data.getLikes()+"");
 
         if(data.getPhotos().size()!=0) {
-
-
             int a = data.getPhotos().size();
-
-
             holder.ll_ll.removeAllViews();
             for (int j = 0; j < a; j++) {
                 /*

@@ -17,11 +17,6 @@ public interface FouthFPresenterImpl extends BasePresenterImpl {
     public void showIcon();
 
     /**
-     * 添加关注
-     */
-    public void addFollowing();
-
-    /**
      * 上传头像
      */
     public void updateIcon(String picPath);

@@ -38,8 +38,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.login_btnLogin) Button login;
     @BindView(R.id.login_btn_registered) Button register;
     @BindView(R.id.login_tv_forget) TextView forget;
-    @InjectPresenter
-    private LoginPresenter mPresenter;
+    @InjectPresenter private LoginPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {

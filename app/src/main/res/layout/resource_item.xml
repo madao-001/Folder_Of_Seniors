@@ -82,7 +82,7 @@
 
     <!-- 横向滚动条 -->
     <HorizontalScrollView
-        android:layout_below="@+id/sell_item_photo"
+        android:layout_below="@+id/resouce_item_photo"
         android:id="@+id/horizontalScrollView1"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
@@ -94,7 +94,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_below="@id/sell_item_photo"
+            android:layout_below="@id/resouce_item_photo"
             android:id="@+id/resource_item_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

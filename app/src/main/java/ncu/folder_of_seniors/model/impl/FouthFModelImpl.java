@@ -11,8 +11,6 @@ import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 public interface FouthFModelImpl {
     void showData(FouthFLisentener lisentener);
     void showIcon(FouthFLisentener2 lisentener);
-    void addFollowing(RegisterLisentener lisentener);
-    void addFollowers(RegisterLisentener lisentener);
     void downloadFile(BmobFile file,RegisterLisentener lisentener);
     void uploadFile(BmobFile file,RegisterLisentener lisentener);
 }

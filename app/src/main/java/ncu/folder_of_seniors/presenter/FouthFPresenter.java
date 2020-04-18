@@ -48,43 +48,8 @@ public class FouthFPresenter extends BasePresenter<FouthFView, FouthFModel> impl
     public void showIcon() {
         getModel().showIcon(new FouthFLisentener2() {
             @Override
-            public void onSeccess(BmobFile bmobFile) {
-                getModel().downloadFile(bmobFile, new RegisterLisentener() {
-                    @Override
-                    public void onSeccess(String msg) {
-                        getView().showIcon(msg);
-                    }
-
-                    @Override
-                    public void onFails(String msg) {
-                        getView().showIcon("");
-                    }
-                });
-            }
-
-            @Override
-            public void onFails(String msg) {
-                getView().showErrorMessage(msg);
-            }
-        });
-    }
-
-    @Override
-    public void addFollowing() {
-        getModel().addFollowing(new RegisterLisentener() {
-            @Override
-            public void onSeccess(String msg) {
-                getModel().addFollowers(new RegisterLisentener() {
-                    @Override
-                    public void onSeccess(String msg) {
-                        getView().showErrorMessage(msg);
-                    }
-
-                    @Override
-                    public void onFails(String msg) {
-                        getView().showErrorMessage(msg);
-                    }
-                });
+            public void onSeccess(String iconURL) {
+                getView().showIcon(iconURL);
             }
 
             @Override

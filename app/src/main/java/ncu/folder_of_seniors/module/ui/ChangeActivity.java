@@ -27,8 +27,8 @@ public class ChangeActivity extends BaseActivity implements ChangeView {
     @BindView(R.id.change_tv) TextView tv_change;
     @BindView(R.id.change_tv_hold) TextView tv_change_hold;
     @BindView(R.id.change_iv_back) ImageView iv_back;
-    @InjectPresenter
-    private ChangePresenter mPresenter;
+    @InjectPresenter private ChangePresenter mPresenter;
+
     private String type;
     @Override
     protected int getLayoutId() {

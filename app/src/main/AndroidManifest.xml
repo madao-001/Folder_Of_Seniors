@@ -51,6 +51,12 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.ui.LaunchActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.ResourceDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.PersonalActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="ncu.folder_of_seniors.BmobContentProvider">

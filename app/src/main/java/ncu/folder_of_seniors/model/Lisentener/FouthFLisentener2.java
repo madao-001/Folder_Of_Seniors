@@ -5,7 +5,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public interface FouthFLisentener2 {
 
-     void onSeccess(BmobFile bmobFile);
+     void onSeccess(String url);
 
      void onFails(String msg);
 

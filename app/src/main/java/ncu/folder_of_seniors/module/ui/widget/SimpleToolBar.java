@@ -25,7 +25,6 @@ public class SimpleToolBar extends Toolbar {
      */
     private TextView mTxtRightTitle;
 
-
     public SimpleToolBar(Context context) {
         this(context,null);
     }

@@ -64,8 +64,8 @@ public class LaunchActivity extends BaseActivity implements AdapterView.OnItemSe
     @BindView(R.id.launch_l_photo) LinearLayout l_photo;
     @BindView(R.id.launch_spinner_launch) Spinner spinner_launch;
     @BindView(R.id.simple_toolbar) SimpleToolBar simpleToolBar;
-    @InjectPresenter
-    private LaunchPresenter mPresenter;
+    @InjectPresenter private LaunchPresenter mPresenter;
+
     private int index;
     private int a = 0;
     private String[] list;
@@ -158,6 +158,7 @@ public class LaunchActivity extends BaseActivity implements AdapterView.OnItemSe
                     resource.setType(mfenlei);
                     resource.setScore(0);
                     resource.setSchool(clientUser.getSchool());
+                    resource.setLikes(0);
                     mPresenter.launch(resource);
                 }else {
                     Toast.makeText(getContext(),"请选择文件上传!",Toast.LENGTH_SHORT).show();
@@ -239,21 +240,6 @@ public class LaunchActivity extends BaseActivity implements AdapterView.OnItemSe
                     break;
                 case FILE_REQUEST_CODE:
                     Uri uri = data.getData(); // 获取用户选择文件的URI
-//                    // 通过ContentProvider查询文件路径
-//                    ContentResolver resolver = this.getContentResolver();
-//                    Cursor cursor = resolver.query(uri, null, null, null, null);
-//                    if (cursor == null) {
-//                        // 未查询到，说明为普通文件，可直接通过URI获取文件路径
-//                        mFilePath = uri.getPath();
-//                        btn_pickFile.setText("已选择文件");
-//                        return;
-//                    }
-//                    if (cursor.moveToFirst()) {
-//                        // 多媒体文件，从数据库中获取文件的真实路径
-//                        mFilePath = cursor.getString(cursor.getColumnIndex("_data"));
-//                        btn_pickFile.setText("已选择文件");
-//                    }
-//                    cursor.close();
                     if (uri != null) {
                         String path = getPath(this, uri);
                         if (path != null) {

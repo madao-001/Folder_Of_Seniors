@@ -43,8 +43,7 @@ import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
 public class RegisterActivity extends BaseActivity implements RegisterView {
 
-    @InjectPresenter
-    private RegisterPresenter mPresenter;
+    @InjectPresenter private RegisterPresenter mPresenter;
     private String type;
     private Boolean sex=true;
     private boolean c=false;
@@ -75,7 +74,6 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                // TODO Auto-generated method stub
                 if(isChecked){
                     sex = true;
                 }else{
@@ -87,7 +85,6 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                // TODO Auto-generated method stub
                 if(isChecked){
                     sex = false;
                 }else{

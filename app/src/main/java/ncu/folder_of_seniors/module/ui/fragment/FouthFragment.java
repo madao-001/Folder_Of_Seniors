@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,8 +49,8 @@ public class FouthFragment extends BaseFragment implements FouthFView {
     private View view;
     private Context context;
     private File tempFile = null;
-    @InjectPresenter
-    private FouthFPresenter mPresenter;
+    @InjectPresenter private FouthFPresenter mPresenter;
+
     @BindView(R.id.f4_tv_register) TextView tv_register;
     @BindView(R.id.f4_tv_login) TextView tv_login;
     @BindView(R.id.f4_my_scroll_view) MyScrollView my_scroll_view;
@@ -190,7 +192,6 @@ public class FouthFragment extends BaseFragment implements FouthFView {
             case R.id.f4_iv_following:
 //                i.setClass(getActivity(), MissHotelQueryActivity.class);
 //                startActivity(i);
-                mPresenter.addFollowing();
                 break;
             case R.id.f4_my_launch:
 //                i.setClass(getActivity(), AlarmsQueryActivity.class);
@@ -324,8 +325,7 @@ public class FouthFragment extends BaseFragment implements FouthFView {
         if(picPath.equals("")||picPath == null){
 
         }else {
-            Bitmap bitmap = getLoacalBitmap(picPath); //从本地取图片(在cdcard中获取)  //
-            iv_icon .setImageBitmap(bitmap); //设置Bitmap
+            Glide.with(getContext()).load(picPath).into(iv_icon);
         }
     }
 

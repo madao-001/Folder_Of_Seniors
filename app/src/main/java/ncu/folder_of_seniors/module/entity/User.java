@@ -10,7 +10,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 public class User extends BmobUser {
     private Integer age;
     private Boolean sex;
-    private BmobFile icon;
+    private String icon;
     private Integer points;
     private String school;
     private String grand;
@@ -60,15 +60,6 @@ public class User extends BmobUser {
         return this;
     }
 
-    public User setIcon(BmobFile icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    public BmobFile getIcon() {
-        return icon;
-    }
-
     public List<String> getTags() {
         return tags;
     }
@@ -84,6 +75,15 @@ public class User extends BmobUser {
 
     public User setSchool(String school) {
         this.school = school;
+        return this;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public User setIcon(String icon) {
+        this.icon = icon;
         return this;
     }
 }

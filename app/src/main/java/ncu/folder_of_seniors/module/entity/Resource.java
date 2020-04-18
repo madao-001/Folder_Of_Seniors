@@ -14,6 +14,7 @@ public class Resource extends BmobObject {
     private User creator;
     private Integer score;
     private Integer price;
+    private Integer likes;
     private String school;
     private List<String> photos=new ArrayList<>();
     private BmobFile file;
@@ -96,6 +97,15 @@ public class Resource extends BmobObject {
 
     public Resource setPhotos(List<String> photos) {
         this.photos = photos;
+        return this;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public Resource setLikes(Integer likes) {
+        this.likes = likes;
         return this;
     }
 }

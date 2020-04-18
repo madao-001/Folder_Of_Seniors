@@ -32,7 +32,6 @@ import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 public class FouthFModel extends BaseModel implements FouthFModelImpl {
 
     String follow_objectid;
-    User person;
     int num1,num2,num3;
     @Override
     public void showData(FouthFLisentener lisentener) {
@@ -95,105 +94,16 @@ public class FouthFModel extends BaseModel implements FouthFModelImpl {
                 if(e==null){
                     if(list!=null){
                         if(list.get(0).getIcon()!= null){
-                            BmobFile bmobfile = list.get(0).getIcon();
-                            lisentener.onSeccess(bmobfile);
-                        }
+                            String iconUrl = list.get(0).getIcon();
+                            lisentener.onSeccess(iconUrl);
+                        }else
+                            lisentener.onSeccess("");
                     } else {
                         lisentener.onFails("查询失败："+e.getErrorCode()+","+e.getMessage());
                         Log.e("查询失败：",e.getMessage());
                     }
                 }else{
                     Log.e("查询失败：",e.getMessage());
-                }
-            }
-        });
-    }
-
-    @Override
-    public void addFollowing(RegisterLisentener lisentener) {
-        Follow follow = new Follow();
-        BmobQuery<Follow> test=new BmobQuery<>();
-        test.addWhereEqualTo("userid",clientUser.getObjectId());
-        test.findObjects(new FindListener<Follow>() {
-            @Override
-            public void done(List<Follow> list, BmobException e) {
-                if(e==null){
-                    follow_objectid=list.get(0).getObjectId();
-                    follow.setObjectId(follow_objectid);
-                    BmobRelation relation = new BmobRelation();
-                    BmobQuery<User> test=new BmobQuery<>();
-                    test.addWhereEqualTo("username","madao_001");
-                    test.findObjects(new FindListener<User>() {
-                        @Override
-                        public void done(List<User> list, BmobException e) {
-                            if(e==null){
-                                person=list.get(0);
-                                relation.add(person);
-                                follow.setFollowing(relation);
-                                follow.update(new UpdateListener() {
-                                    @Override
-                                    public void done(BmobException e) {
-                                        if(e==null){
-                                            lisentener.onSeccess("关注成功!");
-                                        }else {
-                                            lisentener.onFails("关注失败"+e.getMessage());
-                                            Log.e("关注失败3",e.getMessage());
-                                        }
-                                    }
-                                });
-                            }else {
-                                Log.e("关注失败2",e.getMessage());
-                            }
-
-                        }
-                    });
-                }else {
-                    Log.e("关注失败1",e.getMessage());
-                }
-
-            }
-        });
-    }
-
-    @Override
-    public void addFollowers(RegisterLisentener lisentener) {
-        Follow follow = new Follow();
-        BmobQuery<User> test=new BmobQuery<>();
-        test.addWhereEqualTo("username","madao_001");
-        test.findObjects(new FindListener<User>() {
-            @Override
-            public void done(List<User> list, BmobException e) {
-                if(e==null){
-                    String personId = list.get(0).getObjectId();
-                    BmobQuery<Follow> test2=new BmobQuery<>();
-                    test2.addWhereEqualTo("userid",personId);
-                    test2.findObjects(new FindListener<Follow>() {
-                        @Override
-                        public void done(List<Follow> object, BmobException e) {
-                            if(e==null){
-                                String follow_objectid2=object.get(0).getObjectId();
-                                follow.setObjectId(follow_objectid2);
-                                BmobRelation relation = new BmobRelation();
-                                relation.add(clientUser);
-                                follow.setFollowers(relation);
-                                follow.update(new UpdateListener() {
-                                    @Override
-                                    public void done(BmobException e) {
-                                        if(e==null){
-                                            lisentener.onSeccess("关注成功!");
-                                        }else {
-                                            lisentener.onFails("关注失败"+e.getMessage());
-                                            Log.e("关注失败6",e.getMessage());
-                                        }
-                                    }
-                                });
-                            }else {
-                                Log.e("关注失败5",e.getMessage());
-                            }
-                        }
-                    });
-                }else {
-                    Log.e("关注失败4",e.getMessage());
                 }
             }
         });
@@ -233,7 +143,7 @@ public class FouthFModel extends BaseModel implements FouthFModelImpl {
             public void done(BmobException e) {
                 if (e == null) {
                     Log.e("success","上传成功");
-                    clientUser.setIcon(file);
+                    clientUser.setIcon(file.getFileUrl());
                     clientUser.update(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {

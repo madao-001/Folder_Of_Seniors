@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,10 +46,9 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
     @BindView(R.id.setting_rl_age) RelativeLayout rl_age;
     @BindView(R.id.setting_rl_icon) RelativeLayout rl_icon;
     @BindView(R.id.setting_iv_icon) ImageView iv_icon;
-    @InjectPresenter
-    private SettingPresenter mPresenter;
-    @InjectPresenter
-    private FouthFPresenter mPresenter2;
+    @InjectPresenter private SettingPresenter mPresenter;
+    @InjectPresenter private FouthFPresenter mPresenter2;
+
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
     public static final int CAMERA_REQUEST_CODE = 100;
     public static final int IMAGE_REQUEST_CODE = 101;
@@ -64,7 +65,7 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
 
     @Override
     protected void initViews() {
-        //TODO 显示头像 添加学校选择
+        //TODO 添加学校选择
 
 //        if (user.getImage()!=null){
 //            UtilTools.getImage(context,iv_icon,user.getImage());
@@ -228,8 +229,7 @@ public class SettingActivity extends BaseActivity implements SettingView, FouthF
         if(picPath.equals("")||picPath == null){
 
         }else {
-            Bitmap bitmap = getLoacalBitmap(picPath); //从本地取图片(在cdcard中获取)  //
-            iv_icon .setImageBitmap(bitmap); //设置Bitmap
+            Glide.with(getContext()).load(picPath).into(iv_icon);
         }
     }
 

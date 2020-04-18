@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.ui.SearchActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_color"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/search_iv_back_search"
+            android:layout_marginTop="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.37"
+            android:layout_height="40dp"
+            android:src="@drawable/btreturn"/>
+        <EditText
+            android:id="@+id/search_et_search"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="20dp"
+            android:background="@drawable/shape_search_second"/>
+        <TextView
+            android:id="@+id/search_tv_search"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="搜索"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/search_swipe_refresh_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_searchlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>
