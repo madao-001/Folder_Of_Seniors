@@ -185,5 +185,19 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void updateResource(Resource resource, BaseLisentener lisentener) {
+        resource.setBuyNo(resource.getBuyNo()+1);
+        resource.update(resource.getObjectId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    lisentener.onSeccess();
+                }else
+                    lisentener.onFails(e.getMessage());
+            }
+        });
+    }
 }
 

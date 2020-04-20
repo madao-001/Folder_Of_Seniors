@@ -79,7 +79,17 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                 getModel().updatePoints(user.getObjectId(), resource, new BaseLisentener() {
                     @Override
                     public void onSeccess() {
+                        getModel().updateResource(resource, new BaseLisentener() {
+                            @Override
+                            public void onSeccess() {
 
+                            }
+
+                            @Override
+                            public void onFails(String msg) {
+                                getView().showErrorMessage(msg);
+                            }
+                        });
                     }
 
                     @Override

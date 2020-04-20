@@ -57,6 +57,20 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".module.ui.PersonalActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.MyStarActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.MySelledActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.MyBoughtActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.MyLaunchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.SellEditActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.FollowListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".module.ui.ReviewActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="ncu.folder_of_seniors.BmobContentProvider">

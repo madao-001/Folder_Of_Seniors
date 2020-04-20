@@ -1,5 +1,7 @@
 package ncu.folder_of_seniors.module.entity;
 
+import java.util.List;
+
 import cn.bmob.v3.BmobObject;
 
 public class Reviews extends BmobObject {
@@ -7,6 +9,7 @@ public class Reviews extends BmobObject {
     private User user;
     private Integer grade;
     private String desc;
+    private List<String> photos;
 
     public Integer getGrade() {
         return grade;
@@ -41,6 +44,15 @@ public class Reviews extends BmobObject {
 
     public Reviews setUser(User user) {
         this.user = user;
+        return this;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public Reviews setPhotos(List<String> photos) {
+        this.photos = photos;
         return this;
     }
 }

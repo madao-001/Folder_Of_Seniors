@@ -28,4 +28,8 @@ public interface PersonalView extends BaseView {
      * 当更改关注状态时，调用此接口提示
      */
     void showChangeFollow(Boolean isAdd);
+    /**
+     * 当数据请求成功，调用此接口提示
+     */
+    void showLikesNo(Integer num);
 }

@@ -9,6 +9,7 @@ import ncu.folder_of_seniors.model.FirstFModel;
 import ncu.folder_of_seniors.model.Lisentener.FirstFLisentener;
 import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener;
 import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener2;
+import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener3;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 import ncu.folder_of_seniors.model.PersonalModel;
 import ncu.folder_of_seniors.module.entity.Resource;
@@ -34,11 +35,24 @@ public class PersonalPresenter extends BasePresenter<PersonalView, PersonalModel
                         getModel().findFollow(user, new PersonalLisentener2() {
                             @Override
                             public void onSeccess(int num1, int num2, Boolean isFollowing) {
-                                getView().showUserInfo(user);
-                                getView().showResourceList(list);
-                                getView().showFollow(num1,num2,isFollowing);
-                            }
+                                getModel().findLikesNo(user, new PersonalLisentener3() {
+                                    @Override
+                                    public void onSeccess(Integer num) {
+                                        getView().showLikesNo(num);
+                                        getView().showUserInfo(user);
+                                        getView().showResourceList(list);
+                                        getView().showFollow(num1,num2,isFollowing);
+                                    }
 
+                                    @Override
+                                    public void onFails(String msg) {
+                                        getView().showUserInfo(user);
+                                        getView().showResourceList(list);
+                                        getView().showFollow(num1,num2,isFollowing);
+                                        getView().showErrorMessage(msg);
+                                    }
+                                });
+                            }
                             @Override
                             public void onFails(String msg) {
                                 getView().showUserInfo(user);

@@ -7,8 +7,10 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
@@ -16,6 +18,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 import ncu.folder_of_seniors.base.BaseModel;
 import ncu.folder_of_seniors.model.Lisentener.LaunchLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
+import ncu.folder_of_seniors.model.Lisentener.ResouceDetailsLisentener;
 import ncu.folder_of_seniors.model.impl.ChangeModelImpl;
 import ncu.folder_of_seniors.model.impl.LaunchModelImpl;
 import ncu.folder_of_seniors.module.entity.Resource;
@@ -36,6 +39,7 @@ public class LaunchModel extends BaseModel implements LaunchModelImpl {
                     if(list1.size()==filePaths.length){//如果数量相等，则代表文件全部上传完成
                         //do something
                         resource.setFile(list.get(0));
+                        list1.remove(0);
                         resource.setPhotos(list1);
                         resource.save(new SaveListener<String>() {
                             @Override
@@ -62,22 +66,5 @@ public class LaunchModel extends BaseModel implements LaunchModelImpl {
                 }
             });
         }
-
-//    @Override
-//    public void uploadFile(BmobFile file, LaunchLisentener lisentener) {
-//        file.uploadblock(new UploadFileListener() {
-//            @Override
-//            public void done(BmobException e) {
-//                if (e == null) {
-//                    Log.e("success","上传成功");
-//                    lisentener.onSeccess(file);
-//                } else {
-//                    lisentener.onFails("上传失败"+e.getMessage());
-//                    Log.e("fail","上传失败"+e.getMessage());
-//                }
-//            }
-//        });
-//    }
-
 }
 

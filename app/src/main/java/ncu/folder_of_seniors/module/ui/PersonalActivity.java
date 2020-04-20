@@ -38,7 +38,7 @@ public class PersonalActivity extends BaseActivity implements PersonalView {
     @BindView(R.id.personal_iv_head) ImageView iv_head;
     @BindView(R.id.personal_iv_following) ImageView iv_following;
     @BindView(R.id.personal_tv_username) TextView tv_username;
-    @BindView(R.id.personal_tv_sex) TextView tv_sex;
+    @BindView(R.id.personal_tv_school_and_sex) TextView tv_school_and_sex;
     @BindView(R.id.personal_tv_like) TextView tv_like;
     @BindView(R.id.personal_tv_following) TextView tv_following;
     @BindView(R.id.personal_tv_follower) TextView tv_follower;
@@ -83,7 +83,7 @@ public class PersonalActivity extends BaseActivity implements PersonalView {
     @Override
     public void showUserInfo(User user) {
         this.person = user;
-        tv_username.setText("昵称："+person.getUsername());
+        tv_username.setText(person.getUsername());
         if(person.isOnline()){
             tv_isOnline.setText("我在线上");
         }else {
@@ -91,9 +91,9 @@ public class PersonalActivity extends BaseActivity implements PersonalView {
         }
         tv_createdTime.setText("该用户注册于"+person.getCreatedAt());
         if (person.isSex()){
-            tv_sex.setText("男生");
+            tv_school_and_sex.setText("来自"+person.getSchool()+"的男生");
         }else {
-            tv_sex.setText("女生");
+            tv_school_and_sex.setText("来自"+person.getSchool()+"的女生");
         }
         if(person.getIcon()!=null){
             Glide.with(getContext()).load(person.getIcon()).into(iv_head);
@@ -150,6 +150,11 @@ public class PersonalActivity extends BaseActivity implements PersonalView {
             iv_following.setImageDrawable(getResources().getDrawable(R.drawable.guanzhu));
         }
 
+    }
+
+    @Override
+    public void showLikesNo(Integer num) {
+        tv_like.setText(num+"超赞");
     }
 }
 

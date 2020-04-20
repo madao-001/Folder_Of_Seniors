@@ -70,7 +70,7 @@ public class FirstFragment extends BaseFragment implements FirstFAdapter.Callbac
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onResume();   //进行刷新操作
+                initData();   //进行刷新操作
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -135,12 +135,6 @@ public class FirstFragment extends BaseFragment implements FirstFAdapter.Callbac
     @Override
     public void click(View v) {
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.getData();
     }
 
     @Override

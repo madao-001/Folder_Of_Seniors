@@ -101,7 +101,7 @@ public class MyApplication extends Application {
                         IS_LOGIN = false;
                     }
                 } else {
-                    Log.e("fail:",e.getMessage());
+                    Log.e("error", e.getMessage());
                 }
             }
         });

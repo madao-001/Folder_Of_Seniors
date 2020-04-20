@@ -1,18 +1,23 @@
 package ncu.folder_of_seniors.module.ui.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,9 +37,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseFragment;
 import ncu.folder_of_seniors.base.InjectPresenter;
+import ncu.folder_of_seniors.module.ui.FollowListActivity;
 import ncu.folder_of_seniors.module.ui.LoginActivity;
+import ncu.folder_of_seniors.module.ui.MyBoughtActivity;
+import ncu.folder_of_seniors.module.ui.MyLaunchActivity;
+import ncu.folder_of_seniors.module.ui.MySelledActivity;
+import ncu.folder_of_seniors.module.ui.MyStarActivity;
 import ncu.folder_of_seniors.module.ui.RegisterActivity;
 import ncu.folder_of_seniors.module.ui.SettingActivity;
+import ncu.folder_of_seniors.module.ui.adapter.MySelledAdapter;
 import ncu.folder_of_seniors.module.ui.view.FouthFView;
 import ncu.folder_of_seniors.module.ui.widget.MyScrollView;
 import ncu.folder_of_seniors.module.ui.widget.SelectPopupWindow;
@@ -47,7 +58,7 @@ import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
 public class FouthFragment extends BaseFragment implements FouthFView {
     private View view;
-    private Context context;
+    private AlertDialog alertDialog;
     private File tempFile = null;
     @InjectPresenter private FouthFPresenter mPresenter;
 
@@ -187,42 +198,90 @@ public class FouthFragment extends BaseFragment implements FouthFView {
                 startActivityForResult(i,POPWINDOW_REQUEST_CODE);
                 break;
             case R.id.f4_iv_followers:
-//                i.setClass(getActivity(), HasInstalledHotelQueryActivity.class);
-//                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), FollowListActivity.class);
+                    i.putExtra("isFollowing",false);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.f4_iv_following:
-//                i.setClass(getActivity(), MissHotelQueryActivity.class);
-//                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), FollowListActivity.class);
+                    i.putExtra("isFollowing",true);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.f4_my_launch:
-//                i.setClass(getActivity(), AlarmsQueryActivity.class);
-                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), MyLaunchActivity.class);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.f4_my_buy:
-//                i.setClass(getActivity(), StatAlarmsActivity.class);
-                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), MyBoughtActivity.class);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.f4_my_selled:
-//                i.setClass(getActivity(), KeyPersonQueryActivity.class);
-                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), MySelledActivity.class);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.f4_security:
-                i.putExtra("type","zdryyj");
-                startActivity(i);
+                Toast.makeText(getContext(),"该功能还在开发中，尽请期待！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.f4_my_star:
-//                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
-                startActivity(i);
+                if(IS_LOGIN){
+                    i.setClass(getActivity(), MyStarActivity.class);
+                    startActivity(i);
+                }else {
+                    Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.f4_tv_setting:
-                i.putExtra("type","zdryyj");
-                startActivity(i);
+                Toast.makeText(getContext(),"该功能还在开发中，尽请期待！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.f4_add_points:
-//                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
-                startActivity(i);
+////                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
+//                startActivity(i);
                 break;
+        }
+    }
+
+    public void showLoadingDialog() {
+        alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+        alertDialog.setCancelable(false);
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
+                    return true;
+                return false;
+            }
+        });
+        alertDialog.show();
+        alertDialog.setContentView(R.layout.loading_alert);
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+
+    public void dismissLoadingDialog() {
+        if (null != alertDialog && alertDialog.isShowing()) {
+            alertDialog.dismiss();
         }
     }
 
@@ -294,13 +353,6 @@ public class FouthFragment extends BaseFragment implements FouthFView {
                         }
                     }
                     break;
-//                case LOGIN_REQUEST_CODE:
-//                    String fans = data.getStringExtra("fans");
-//                    String focus = data.getStringExtra("focus");
-//                    tv_fans.setText(fans+"粉丝");
-//                    tv_jifen.setText(user.getJifen()+"积分");
-//                    tv_focus.setText(focus+"关注");
-//                    break;
                 default:
             }
         }
@@ -397,5 +449,12 @@ public class FouthFragment extends BaseFragment implements FouthFView {
     public void getPicPath(String picPath) {
         mPresenter.updateIcon(picPath);
         Log.e("savePic","start4"+picPath);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+        init();
     }
 }

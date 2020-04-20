@@ -15,6 +15,7 @@ import ncu.folder_of_seniors.model.Lisentener.FirstFLisentener;
 import ncu.folder_of_seniors.model.Lisentener.FouthFLisentener;
 import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener;
 import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener2;
+import ncu.folder_of_seniors.model.Lisentener.PersonalLisentener3;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 import ncu.folder_of_seniors.model.impl.FirstFModelImpl;
 import ncu.folder_of_seniors.model.impl.PersonalModelImpl;
@@ -26,7 +27,7 @@ import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 
 public class PersonalModel extends BaseModel implements PersonalModelImpl {
     String follow_objectid;
-    Integer num1,num2;
+    Integer num1,num2,likeNo;
     Boolean isFollowing=false;
     User person;
     @Override
@@ -124,6 +125,27 @@ public class PersonalModel extends BaseModel implements PersonalModelImpl {
                 else {
                     lisentener.onFails("用户好像不存在了哦"+e);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void findLikesNo(User user, PersonalLisentener3 lisentener) {
+        BmobQuery<Resource> query = new BmobQuery<>();
+        query.addWhereEqualTo("creator",user);
+        query.findObjects(new FindListener<Resource>() {
+            @Override
+            public void done(List<Resource> object, BmobException e) {
+                if(e==null){
+                    likeNo = 0;
+                    if(object.size()!=0){
+                        for(int i=0;i<object.size();i++){
+                            likeNo = likeNo+object.get(i).getLikes();
+                        }
+                    }
+                    lisentener.onSeccess(likeNo);
+                }else
+                    lisentener.onFails("error:"+e.getMessage());
             }
         });
     }

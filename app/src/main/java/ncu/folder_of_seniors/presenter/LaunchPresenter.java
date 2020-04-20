@@ -13,6 +13,7 @@ import ncu.folder_of_seniors.model.ChangeModel;
 import ncu.folder_of_seniors.model.LaunchModel;
 import ncu.folder_of_seniors.model.Lisentener.LaunchLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
+import ncu.folder_of_seniors.model.Lisentener.ResouceDetailsLisentener;
 import ncu.folder_of_seniors.module.entity.Resource;
 import ncu.folder_of_seniors.module.ui.view.ChangeView;
 import ncu.folder_of_seniors.module.ui.view.LaunchView;
@@ -56,4 +57,7 @@ public class LaunchPresenter extends BasePresenter<LaunchView, LaunchModel> impl
             }
         });
     }
+
+
+
 }

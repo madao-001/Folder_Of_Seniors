@@ -70,7 +70,7 @@ public class SearchActivity extends BaseActivity implements FirstFAdapter.Callba
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onResume();   //进行刷新操作
+                initData();   //进行刷新操作
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -102,12 +102,6 @@ public class SearchActivity extends BaseActivity implements FirstFAdapter.Callba
     @Override
     public void click(View v) {
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
     }
 
     @Override

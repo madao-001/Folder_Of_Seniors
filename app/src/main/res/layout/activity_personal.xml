@@ -91,7 +91,7 @@
                     android:textColor="@color/white"/>
 
                 <TextView
-                    android:id="@+id/personal_tv_sex"
+                    android:id="@+id/personal_tv_school_and_sex"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginLeft="20dp"

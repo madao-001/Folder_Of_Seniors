@@ -12,9 +12,10 @@ public class Resource extends BmobObject {
     private String type;
     private String desc;
     private User creator;
-    private Integer score;
+    private Double grade;
     private Integer price;
     private Integer likes;
+    private Integer buyNo;
     private String school;
     private List<String> photos=new ArrayList<>();
     private BmobFile file;
@@ -43,15 +44,6 @@ public class Resource extends BmobObject {
 
     public Resource setDesc(String desc) {
         this.desc = desc;
-        return this;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public Resource setScore(Integer score) {
-        this.score = score;
         return this;
     }
 
@@ -106,6 +98,24 @@ public class Resource extends BmobObject {
 
     public Resource setLikes(Integer likes) {
         this.likes = likes;
+        return this;
+    }
+
+    public Integer getBuyNo() {
+        return buyNo;
+    }
+
+    public Resource setBuyNo(Integer buyNo) {
+        this.buyNo = buyNo;
+        return this;
+    }
+
+    public Double getGrade() {
+        return grade;
+    }
+
+    public Resource setGrade(Double grade) {
+        this.grade = grade;
         return this;
     }
 }

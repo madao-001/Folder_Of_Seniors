@@ -10,5 +10,4 @@ public interface LaunchPresenterImpl extends BasePresenterImpl {
      */
     public void launch(Resource resource);
 
-
 }
