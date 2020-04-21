@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,14 +15,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobPointer;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.module.entity.Resource;
-import ncu.folder_of_seniors.module.entity.User;
-import ncu.folder_of_seniors.module.ui.ResourceDetailsActivity;
+import ncu.folder_of_seniors.module.ui.activity.ResourceDetailsActivity;
 import ncu.folder_of_seniors.utils.Utils;
 
 public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.PA> {

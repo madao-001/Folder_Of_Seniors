@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@drawable/view"
-    tools:context=".module.ui.LoginActivity">
+    tools:context=".module.ui.activity.LoginActivity">
 
     <Toolbar
         android:id="@+id/login_toolbar"

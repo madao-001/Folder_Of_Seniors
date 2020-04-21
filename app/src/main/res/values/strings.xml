@@ -4,8 +4,17 @@
     <string name="text_editor_success">修改成功</string>
     <string name="text_editor_failure">修改失败</string>
     <string name="text_unknown">未知</string>
+    <string name="longclick_speak">长按说话</string>
+    <string name="picture">照片</string>
+    <string name="camera">拍摄</string>
+    <string name="location">位置</string>
+    <string name="voice_up_tips">手指上滑,取消发送</string>
+    <string name="voice_cancel_tips">松开手指，取消发送</string>
+    <string name="voice_seconds_tips">还可以说%1$s秒</string>
+    <string name="voice_short_tips">录音时间太短</string>
     <string name="delete_focu">删除关注</string>
     <string name="delete_release">删除发布</string>
+    <string name="delete_conversation">删除会话</string>
     <string name="delete_collect">删除收藏</string>
     <string name="delete_fan">敬请期待</string>
     <string name="menu_detail">查看详情</string>

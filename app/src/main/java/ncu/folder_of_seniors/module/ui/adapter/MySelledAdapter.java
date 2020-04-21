@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,13 +23,17 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.List;
 
+import cn.bmob.newim.BmobIM;
+import cn.bmob.newim.bean.BmobIMConversation;
+import cn.bmob.newim.bean.BmobIMUserInfo;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.module.entity.Resource;
 import ncu.folder_of_seniors.module.entity.UserAction;
-import ncu.folder_of_seniors.module.ui.ResourceDetailsActivity;
+import ncu.folder_of_seniors.module.ui.activity.ChatActivity;
+import ncu.folder_of_seniors.module.ui.activity.ResourceDetailsActivity;
 
 public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>implements View.OnClickListener {
 
@@ -37,6 +42,7 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
     private UserAction data;
     private Resource resource;
     private AlertDialog alertDialog;
+    private BmobIMUserInfo info;
 
     private MySelledAdapter.Callback mCallback;
 
@@ -82,6 +88,8 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
         //设置数据
         data = mDatas.get(position);
         resource=data.getResource();
+        //构造聊天方的用户信息:传入用户id、用户名和用户头像三个参数
+        info = new BmobIMUserInfo(data.getUser().getObjectId(), data.getUser().getUsername(), data.getUser().getIcon());
         if(resource!=null){
             if(resource.getPhotos()!=null&&resource.getPrice()!=null&&resource.getTitle()!=null){
                 holder.title.setText(resource.getTitle());
@@ -100,11 +108,13 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
             @Override
             public void onClick(View v) {
                 //在这里跳转到和卖家聊天页面
-                //TODO 添加聊天功能
-                String objectId=data.getUser().getObjectId();
-//                Intent intent=new Intent(mContext, ChatActivity.class);
-//                intent.putExtra("sellerid",objectId);
-//                mContext.startActivity(intent);
+                BmobIMConversation conversationEntrance = BmobIM.getInstance().startPrivateConversation(info, null);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("c", conversationEntrance);
+                Intent intent = new Intent();
+                intent.setClass(mContext, ChatActivity.class);
+                intent.putExtra("chat", bundle);
+                mContext.startActivity(intent);
             }
         });
 

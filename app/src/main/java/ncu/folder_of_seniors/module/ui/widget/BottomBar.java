@@ -2,6 +2,7 @@ package ncu.folder_of_seniors.module.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import ncu.folder_of_seniors.R;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 
 public class BottomBar extends LinearLayout {
@@ -16,6 +19,7 @@ public class BottomBar extends LinearLayout {
     private ImageView iv_home,iv_campus,iv_message,iv_mine;
     private FrameLayout mFirst_bottom, mSecond_bottom, mThird_bottom, mFouth_bottom, mCenter_bottom;
     private OnBottonbarClick mOnBottonbarClick;
+    private Badge badge;
 
     public BottomBar(Context context) {
         super(context);
@@ -154,4 +158,17 @@ public class BottomBar extends LinearLayout {
         iv_message.setSelected(isSelected[2]);
         iv_mine.setSelected(isSelected[3]);
     }
+
+    public void setConversationTips(Boolean isVisible,int count){
+        if(isVisible){
+            if(badge==null){
+                badge=new QBadgeView(getContext()).bindTarget(iv_message).setBadgeNumber(count).setBadgeGravity(Gravity.END | Gravity.TOP).setBadgeTextSize(8,true);
+            }
+        }
+        else{
+            if(badge!=null)
+                badge.hide(true);
+        }
+    }
+
 }

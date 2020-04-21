@@ -1,7 +1,6 @@
 package ncu.folder_of_seniors.module.ui.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,15 +35,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseFragment;
 import ncu.folder_of_seniors.base.InjectPresenter;
-import ncu.folder_of_seniors.module.ui.FollowListActivity;
-import ncu.folder_of_seniors.module.ui.LoginActivity;
-import ncu.folder_of_seniors.module.ui.MyBoughtActivity;
-import ncu.folder_of_seniors.module.ui.MyLaunchActivity;
-import ncu.folder_of_seniors.module.ui.MySelledActivity;
-import ncu.folder_of_seniors.module.ui.MyStarActivity;
-import ncu.folder_of_seniors.module.ui.RegisterActivity;
-import ncu.folder_of_seniors.module.ui.SettingActivity;
-import ncu.folder_of_seniors.module.ui.adapter.MySelledAdapter;
+import ncu.folder_of_seniors.module.ui.activity.FollowListActivity;
+import ncu.folder_of_seniors.module.ui.activity.LoginActivity;
+import ncu.folder_of_seniors.module.ui.activity.MyBoughtActivity;
+import ncu.folder_of_seniors.module.ui.activity.MyLaunchActivity;
+import ncu.folder_of_seniors.module.ui.activity.MySelledActivity;
+import ncu.folder_of_seniors.module.ui.activity.MyStarActivity;
+import ncu.folder_of_seniors.module.ui.activity.RegisterActivity;
+import ncu.folder_of_seniors.module.ui.activity.SettingActivity;
 import ncu.folder_of_seniors.module.ui.view.FouthFView;
 import ncu.folder_of_seniors.module.ui.widget.MyScrollView;
 import ncu.folder_of_seniors.module.ui.widget.SelectPopupWindow;
@@ -109,21 +106,10 @@ public class FouthFragment extends BaseFragment implements FouthFView {
 
     @Override
     protected void init() {
-        if(IS_LOGIN){
-            rl_login.setVisibility(View.VISIBLE);
-            rl_un_login.setVisibility(View.GONE);
-            iv_settings.setVisibility(View.VISIBLE);
-
-        }else {
-            rl_un_login.setVisibility(View.VISIBLE);
-            rl_login.setVisibility(View.GONE);
-            iv_settings.setVisibility(View.GONE);
-        }
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);   //设置下拉刷新进度条的颜色
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                init();
                 initData();
                 swipeRefresh.setRefreshing(false);
             }
@@ -133,11 +119,17 @@ public class FouthFragment extends BaseFragment implements FouthFView {
     @Override
     protected void initData() {
         if(IS_LOGIN){
+            rl_login.setVisibility(View.VISIBLE);
+            rl_un_login.setVisibility(View.GONE);
+            iv_settings.setVisibility(View.VISIBLE);
             tv_nickname.setText(clientUser.getUsername());
             tv_points.setText(clientUser.getPoints()+"积分");
             mPresenter.showData();
             mPresenter.showIcon();
         }else {
+            rl_un_login.setVisibility(View.VISIBLE);
+            rl_login.setVisibility(View.GONE);
+            iv_settings.setVisibility(View.GONE);
             tv_points.setText("积分");
             tv_following.setText("关注");
             tv_followers.setText("粉丝");
@@ -259,29 +251,6 @@ public class FouthFragment extends BaseFragment implements FouthFView {
 ////                i.setClass(getActivity(), MoreLicenseQueryActivity.class);
 //                startActivity(i);
                 break;
-        }
-    }
-
-    public void showLoadingDialog() {
-        alertDialog = new AlertDialog.Builder(getContext()).create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
-        alertDialog.setCancelable(false);
-        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_SEARCH || keyCode == KeyEvent.KEYCODE_BACK)
-                    return true;
-                return false;
-            }
-        });
-        alertDialog.show();
-        alertDialog.setContentView(R.layout.loading_alert);
-        alertDialog.setCanceledOnTouchOutside(false);
-    }
-
-    public void dismissLoadingDialog() {
-        if (null != alertDialog && alertDialog.isShowing()) {
-            alertDialog.dismiss();
         }
     }
 
@@ -451,10 +420,4 @@ public class FouthFragment extends BaseFragment implements FouthFView {
         Log.e("savePic","start4"+picPath);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initData();
-        init();
-    }
 }

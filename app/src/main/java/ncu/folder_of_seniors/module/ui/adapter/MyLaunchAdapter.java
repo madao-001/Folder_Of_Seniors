@@ -25,7 +25,7 @@ import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.model.Lisentener.FouthFLisentener;
 import ncu.folder_of_seniors.module.entity.Resource;
 import ncu.folder_of_seniors.module.entity.UserAction;
-import ncu.folder_of_seniors.module.ui.SellEditActivity;
+import ncu.folder_of_seniors.module.ui.activity.SellEditActivity;
 
 public class MyLaunchAdapter extends RecyclerView.Adapter<MyLaunchAdapter.RE> implements View.OnLongClickListener{
     private List<Resource> sellList=new ArrayList<Resource>();
@@ -38,9 +38,6 @@ public class MyLaunchAdapter extends RecyclerView.Adapter<MyLaunchAdapter.RE> im
 
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-
-
-
 
 
     public MyLaunchAdapter(Context context, List<Resource> sellList) {

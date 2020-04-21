@@ -1,13 +1,11 @@
 package ncu.folder_of_seniors.module.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +21,7 @@ import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseFragment;
 import ncu.folder_of_seniors.base.InjectPresenter;
 import ncu.folder_of_seniors.module.entity.Resource;
-import ncu.folder_of_seniors.module.ui.SearchActivity;
+import ncu.folder_of_seniors.module.ui.activity.SearchActivity;
 import ncu.folder_of_seniors.module.ui.adapter.FirstFAdapter;
 import ncu.folder_of_seniors.module.ui.view.FirstFView;
 import ncu.folder_of_seniors.presenter.FirstFPresenter;

@@ -64,7 +64,6 @@ public class RegisterModel extends BaseModel implements RegisterModelImpl {
             @Override
             public void done(Object o, BmobException e) {
                 if(e==null){
-                    //EventBus.getDefault().post(new EventModel(EventModel.CODE_LOGIN));
                     //用户注册成功时，在关注表中增添一行数据
                     Follow follow = new Follow();
                     follow.setUserid(user.getObjectId());

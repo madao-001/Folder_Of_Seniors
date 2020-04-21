@@ -30,7 +30,7 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
     public void getData(String type, User user, MyBoughtSelledLisentener lisentener) {
         if(!type.equals("")){
             BmobQuery<UserAction> query = new BmobQuery<UserAction>();
-            query.include("resource");
+            query.include("resource.creator,user");
             //按照时间降序
             query.order("-createdAt");
             query.addWhereEqualTo("user", user);
@@ -52,6 +52,7 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
         }else {
             BmobQuery<Resource> query = new BmobQuery<Resource>();
             query.order("-createdAt");
+            query.include("creator");
             query.addWhereEqualTo("creator",user);
             query.findObjects(new FindListener<Resource>() {
                 @Override
@@ -62,7 +63,7 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
                             length = list.size();
                             for(int i=0;i<list.size();i++){
                                 BmobQuery<UserAction> query2 = new BmobQuery<UserAction>();
-                                query2.include("user");
+                                query.include("resource.creator,user");
                                 query2.order("-createdAt");
                                 query2.addWhereEqualTo("resource", list.get(i));
                                 query2.addWhereEqualTo("actionType", "buy");
@@ -72,14 +73,8 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
                                         if(e==null){
                                             if(object.size()!=0){
                                                 if(tag==--length){
-                                                    for(int j = 0;j<object.size();j++){
-                                                        object.get(j).setResource(list.get(tag));
-                                                    }
                                                     lisentener.onSeccess(object);
                                                 }else{
-                                                    for(int j = 0;j<object.size();j++){
-                                                        object.get(j).setResource(list.get(tag));
-                                                    }
                                                     lisentener.onProgress(object);
                                                 }
                                             }

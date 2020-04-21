@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import ncu.folder_of_seniors.R;
-import ncu.folder_of_seniors.module.ui.LaunchActivity;
+import ncu.folder_of_seniors.module.ui.activity.LaunchActivity;
 
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 

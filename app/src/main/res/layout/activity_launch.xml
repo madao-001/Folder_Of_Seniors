@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg_color"
-    tools:context=".module.ui.LaunchActivity">
+    tools:context=".module.ui.activity.LaunchActivity">
     <LinearLayout
         android:id="@+id/launch_content"
         android:layout_width="match_parent"

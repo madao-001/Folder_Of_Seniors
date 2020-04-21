@@ -75,10 +75,12 @@
 
             <ImageView
                 android:id="@+id/tab_message_click"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:paddingLeft="@dimen/margin_10"
+                android:paddingRight="@dimen/margin_10"
+                android:paddingBottom="@dimen/margin_10"
                 android:layout_gravity="top|center"
-                android:layout_marginTop="5dp"
                 android:src="@drawable/selector_message"/>
 
             <TextView

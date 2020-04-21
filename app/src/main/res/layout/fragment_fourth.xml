@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/my_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="ncu.folder_of_seniors.module.ui.MainActivity">
+    tools:context="ncu.folder_of_seniors.module.ui.activity.MainActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/f4_swipe_refresh"

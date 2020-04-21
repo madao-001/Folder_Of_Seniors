@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg_color"
-    tools:context=".module.ui.ReviewActivity">
+    tools:context=".module.ui.activity.ReviewActivity">
     <LinearLayout
         android:id="@+id/review_launch_content"
         android:layout_width="match_parent"

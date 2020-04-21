@@ -5,9 +5,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -17,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.app.MyApplication;
+import ncu.folder_of_seniors.module.entity.MessageEvent;
 
 /**
  * @author oywj
@@ -33,6 +39,15 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
     protected abstract int getLayoutId();
     protected abstract void initViews();
     protected abstract void initData();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //注册EventBus
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
 
     @SuppressWarnings({"unchecked", "TryWithIdenticalCatches"})
     @Override
@@ -94,6 +109,30 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
         }
     }
 
+    /**
+     * EventBus处理事件
+     *
+     * @param messageEvent
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventBus(MessageEvent messageEvent) {
+        //更新UI数据
+        Log.e("will changed class name", "classname:" + messageEvent.className);
+        Log.e("this class name", "classname:" + getClass().getName());
+        if (messageEvent.className.contains(getClass().getName())) {
+            initData();
+        }
+    }
+
+    /**
+     * EventBus更新UI
+     */
+    public void onChangeDataInUI(String className) {
+        MessageEvent messageEvent = new MessageEvent();
+        messageEvent.className = className;
+        EventBus.getDefault().post(messageEvent);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -106,6 +145,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
         mInjectPresenters.clear();
         mInjectPresenters = null;
         unbinder.unbind();
+        //反注册EventBus
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
