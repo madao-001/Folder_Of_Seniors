@@ -145,7 +145,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setOnline(true);
             user.setSchool(school);
             user.setSex(sex);
-            user.setPoints(0);
+            user.setPoints(100);
         }else if(type.equals("邮箱注册")){
             user.setUsername(username);
             user.setPassword(pwd);
@@ -154,7 +154,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setOnline(true);
             user.setSchool(school);
             user.setSex(sex);
-            user.setPoints(0);
+            user.setPoints(100);
         }
         return user;
     }

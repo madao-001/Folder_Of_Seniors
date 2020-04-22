@@ -24,6 +24,7 @@ import cn.bmob.newim.listener.ConnectStatusChangeListener;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
 import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.module.entity.User;
 import ncu.folder_of_seniors.module.event.RefreshEvent;

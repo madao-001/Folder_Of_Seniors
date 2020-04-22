@@ -25,7 +25,7 @@
 
     <color name="holo_red_light">#ffff4444</color>
     <color name="vip_club_color">#aaaa0000</color>
-    <color name="ic_launcher_background">#CBCDC9</color>
+    <color name="ic_launcher_background">#ffffff</color>
 
     <color name="color_1e1e1e">#1e1e1e</color>
     <color name="actionsheet_blue">#288cfc</color>

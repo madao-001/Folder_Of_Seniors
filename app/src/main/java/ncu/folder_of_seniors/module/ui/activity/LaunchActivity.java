@@ -137,14 +137,16 @@ public class LaunchActivity extends BaseActivity implements AdapterView.OnItemSe
                     }else if(Verify.isStrEmpty(et_price_launch.getText().toString())){
                         Toast.makeText(getContext(),"请添加所需积分!",Toast.LENGTH_SHORT).show();
                         return;
-                    }else if(!Verify.isNum(et_price_launch.getText().toString().trim())){
-                        Toast.makeText(getContext(),"请输入正确的积分!",Toast.LENGTH_SHORT).show();
-                        return;
-                    }else if(!Verify.isNum(et_price_launch.getText().toString().trim())){
+                    }else if(!Verify.isPositiveInt(et_price_launch.getText().toString().trim())){
                         Toast.makeText(getContext(),"请输入正确的积分!",Toast.LENGTH_SHORT).show();
                         return;
                     }else if(selectList==null){
                         Toast.makeText(getContext(),"请至少选择一张图片！",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Integer a = Integer.parseInt(et_price_launch.getText().toString().trim());
+                    if(a>10){
+                        Toast.makeText(getContext(),"资源定价暂时不能超过10",Toast.LENGTH_SHORT).show();
                         return;
                     }
                     resource.setDesc(et_content_launch.getText().toString());

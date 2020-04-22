@@ -252,8 +252,8 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/f4_security"
-                    android:text="账户与安全" />
+                    android:id="@+id/f4_feedback"
+                    android:text="使用反馈" />
 
                 <View
                     style="@style/divider"
@@ -261,8 +261,8 @@
 
                 <TextView
                     style="@style/text_item"
-                    android:id="@+id/f4_tv_setting"
-                    android:text="设置" />
+                    android:id="@+id/f4_tv_check_update"
+                    android:text="检测更新" />
             </LinearLayout>
         </ncu.folder_of_seniors.module.ui.widget.MyScrollView>
 

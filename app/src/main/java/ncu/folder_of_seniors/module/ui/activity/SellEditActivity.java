@@ -131,10 +131,7 @@ public class SellEditActivity extends BaseActivity implements AdapterView.OnItem
                     }else if(Verify.isStrEmpty(et_price_launch.getText().toString())){
                         Toast.makeText(getContext(),"请添加所需积分!",Toast.LENGTH_SHORT).show();
                         return;
-                    }else if(!Verify.isNum(et_price_launch.getText().toString().trim())){
-                        Toast.makeText(getContext(),"请输入正确的积分!",Toast.LENGTH_SHORT).show();
-                        return;
-                    }else if(!Verify.isNum(et_price_launch.getText().toString().trim())){
+                    }else if(!Verify.isPositiveInt(et_price_launch.getText().toString().trim())){
                         Toast.makeText(getContext(),"请输入正确的积分!",Toast.LENGTH_SHORT).show();
                         return;
                     }

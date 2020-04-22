@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Folder_Of_Seniors</string>
+    <string name="app_name">学长的文件夹</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="text_editor_success">修改成功</string>
     <string name="text_editor_failure">修改失败</string>

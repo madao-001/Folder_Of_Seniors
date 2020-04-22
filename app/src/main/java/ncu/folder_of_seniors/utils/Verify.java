@@ -20,6 +20,11 @@ public class Verify {
     public static final String REGEX_NUM="^(\\-|\\+)?\\d+(\\.\\d+)?$";
 
     /**
+     * 数字正则（正整数）
+     */
+    public static final String REGEX_NUM2="[0-9]*";
+
+    /**
      * 旅馆编号正则（10位整数）
      */
     public static final String REGEX_HOTELCODE="^[0-9]{10}$";
@@ -83,6 +88,16 @@ public class Verify {
     public static boolean isNum(String str){
         return Pattern.matches(REGEX_NUM,str);
     }
+
+    /**
+     * 是否是数组(包含整数或者小数）
+     * @param str
+     * @return
+     */
+    public static boolean isPositiveInt(String str){
+        return Pattern.matches(REGEX_NUM2,str);
+    }
+
     /**
      * 字符串是否为空
      * return 为空返回true

@@ -59,6 +59,8 @@ public class FouthFragment extends BaseFragment implements FouthFView {
     private File tempFile = null;
     @InjectPresenter private FouthFPresenter mPresenter;
 
+    //TODO 1、检测版本、删除安装包
+    //TODO 2、使用反馈
     @BindView(R.id.f4_tv_register) TextView tv_register;
     @BindView(R.id.f4_tv_login) TextView tv_login;
     @BindView(R.id.f4_my_scroll_view) MyScrollView my_scroll_view;
@@ -79,8 +81,8 @@ public class FouthFragment extends BaseFragment implements FouthFView {
     @BindView(R.id.f4_my_selled) TextView my_selled;
     @BindView(R.id.f4_my_launch) TextView my_launch;
     @BindView(R.id.f4_my_buy) TextView my_buy;
-    @BindView(R.id.f4_security) TextView security;
-    @BindView(R.id.f4_tv_setting) TextView tv_setting;
+    @BindView(R.id.f4_feedback) TextView security;
+    @BindView(R.id.f4_tv_check_update) TextView tv_setting;
 
     private float alphaHeight = 0;//透明度渐变的高度
     public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
@@ -153,8 +155,8 @@ public class FouthFragment extends BaseFragment implements FouthFView {
             R.id.f4_iv_icon,R.id.f4_iv_followers,
             R.id.f4_iv_following,R.id.f4_my_launch,
             R.id.f4_my_buy,R.id.f4_my_selled,
-            R.id.f4_my_star,R.id.f4_security,
-            R.id.f4_tv_setting,R.id.f4_add_points})
+            R.id.f4_my_star,R.id.f4_feedback,
+            R.id.f4_tv_check_update,R.id.f4_add_points})
     public void onViewClick(View v){
         Intent i = new Intent();
         switch (v.getId()){
@@ -233,7 +235,7 @@ public class FouthFragment extends BaseFragment implements FouthFView {
                     Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.f4_security:
+            case R.id.f4_feedback:
                 Toast.makeText(getContext(),"该功能还在开发中，尽请期待！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.f4_my_star:
@@ -244,7 +246,7 @@ public class FouthFragment extends BaseFragment implements FouthFView {
                     Toast.makeText(getContext(),"请先登录！", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.f4_tv_setting:
+            case R.id.f4_tv_check_update:
                 Toast.makeText(getContext(),"该功能还在开发中，尽请期待！", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.f4_add_points:

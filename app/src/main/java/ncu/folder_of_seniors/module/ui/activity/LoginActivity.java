@@ -66,8 +66,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 startActivityForResult(i,REGISTER_REQUEST_CODE);
                 break;
             case R.id.login_tv_forget:
-//                i.setClass(getContext(), WitnessQueryActivity.class);
-//                startActivity(i);
+                //TODO 完成忘记密码的功能
+                Toast.makeText(getContext(),"这个功能下个月再做，先当几天懒狗~",Toast.LENGTH_SHORT).show();
                 break;
         }
     }

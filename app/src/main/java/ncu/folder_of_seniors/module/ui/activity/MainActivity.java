@@ -25,6 +25,9 @@ import cn.bmob.newim.BmobIM;
 import cn.bmob.newim.event.MessageEvent;
 import cn.bmob.newim.event.OfflineMessageEvent;
 import cn.bmob.newim.notification.BmobNotificationManager;
+import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
 import ncu.folder_of_seniors.R;
 import ncu.folder_of_seniors.base.BaseActivity;
 import ncu.folder_of_seniors.base.BaseFragment;
@@ -169,6 +172,20 @@ public class MainActivity extends BaseActivity implements BaseView {
 
     @Override
     protected void initData() {
+        //第一次运行建完表之后就可以删掉这行代码了
+        //BmobUpdateAgent.initAppVersion();
+        //设置仅WiFi环境更新
+        BmobUpdateAgent.setUpdateOnlyWifi(false);
+        //设置更新监听器
+        BmobUpdateAgent.update(this);
+        BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
+            @Override
+            public void onUpdateReturned(int updateStatus, UpdateResponse updateResponse) {
+                int a = updateStatus;
+                UpdateResponse b = updateResponse;
+
+            }
+        });
         if (clientUser != null) {
             fetchUserInfo(new BaseLisentener() {
                 @Override

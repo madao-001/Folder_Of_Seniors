@@ -163,7 +163,8 @@ public class BottomBar extends LinearLayout {
         if(isVisible){
             if(badge==null){
                 badge=new QBadgeView(getContext()).bindTarget(iv_message).setBadgeNumber(count).setBadgeGravity(Gravity.END | Gravity.TOP).setBadgeTextSize(8,true);
-            }
+            }else
+                badge.setBadgeNumber(count);
         }
         else{
             if(badge!=null)
