@@ -2,6 +2,7 @@ package ncu.folder_of_seniors.module.ui.view;
 
 import cn.bmob.v3.BmobUser;
 import ncu.folder_of_seniors.base.BaseView;
+import ncu.folder_of_seniors.module.entity.User;
 
 public interface RegisterView extends BaseView {
 
@@ -12,7 +13,7 @@ public interface RegisterView extends BaseView {
     /**
      * 获取用户信息
      */
-    BmobUser getUser();
+    User getUser();
     /**
      * 注册成功时调用此接口
      */

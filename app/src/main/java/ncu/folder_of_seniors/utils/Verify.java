@@ -1,5 +1,6 @@
 package ncu.folder_of_seniors.utils;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -53,7 +54,7 @@ public class Verify {
     /**
      * 正则表达式：验证手机号
      */
-    public static final String REGEX_MOBILE = "^((17[0-9])|(14[0-9])|(13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE ="^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8,9]))\\d{8}$";
 
     /**
      * 正则表达式：验证邮箱
@@ -63,7 +64,7 @@ public class Verify {
     /**
      * 正则表达式：验证汉字
      */
-    public static final String REGEX_CHINESE = "^[\u4e00-\u9fa5],{0,}$";
+    public static final String REGEX_CHINESE = "[\\u4e00-\\u9fa5]{4,15}";
 
     /**
      * 正则表达式：验证身份证
@@ -97,7 +98,6 @@ public class Verify {
     public static boolean isPositiveInt(String str){
         return Pattern.matches(REGEX_NUM2,str);
     }
-
     /**
      * 字符串是否为空
      * return 为空返回true
@@ -176,7 +176,14 @@ public class Verify {
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isMobile(String mobile) {
-        return Pattern.matches(REGEX_MOBILE, mobile);
+        if (mobile.length() != 11) {
+                return false;
+        }else {
+            Pattern p = Pattern.compile(REGEX_MOBILE);
+            Matcher m = p.matcher(mobile);
+            boolean isMatch = m.matches();
+            return isMatch;
+        }
     }
 
     /**

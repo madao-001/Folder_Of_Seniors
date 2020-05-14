@@ -25,6 +25,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
+import jackmego.com.jieba_android.JiebaSegmenter;
 import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.module.entity.User;
 import ncu.folder_of_seniors.module.event.RefreshEvent;
@@ -58,6 +59,8 @@ public class MyApplication extends Application {
         StrictMode.setVmPolicy(builder.build());
         builder.detectFileUriExposure();
         clientUser =  BmobUser.getCurrentUser(User.class);
+        // 分词软件的异步初始化
+        JiebaSegmenter.init(getApplicationContext());
     }
 
     public static Context getClientAppContext(){

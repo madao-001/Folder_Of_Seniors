@@ -2,13 +2,17 @@ package ncu.folder_of_seniors.model;
 
 import android.util.Log;
 
+import java.io.File;
+
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import ncu.folder_of_seniors.base.BaseModel;
 import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
@@ -20,10 +24,32 @@ import ncu.folder_of_seniors.module.entity.User;
 public class RegisterModel extends BaseModel implements RegisterModelImpl {
 
     @Override
+    public void uploadIcon(String path, RegisterLisentener lisentener) {
+        BmobFile bmobFile = new BmobFile(new File(path));
+        bmobFile.uploadblock(new UploadFileListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    //bmobFile.getFileUrl()--返回的上传文件的完整地址
+                    Log.e("上传文件成功:" , bmobFile.getFileUrl());
+                    lisentener.onSeccess(bmobFile.getFileUrl());
+                }else{
+                    Log.e("上传文件失败:" , e.getMessage());
+                    lisentener.onFails("上传文件失败"+e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onProgress(Integer value) {
+                // 返回的上传进度（百分比）
+            }
+        });
+    }
+
+    @Override
     public void registerByEmail(BmobUser user, RegisterLisentener lisentener) {
-        if (lisentener == null) {
-            return;
-        }
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
@@ -57,9 +83,6 @@ public class RegisterModel extends BaseModel implements RegisterModelImpl {
 
     @Override
     public void registerByPhone(BmobUser user, String smsCode, RegisterLisentener lisentener) {
-        if (lisentener == null) {
-            return;
-        }
         user.signUp(new SaveListener<Object>() {
             @Override
             public void done(Object o, BmobException e) {

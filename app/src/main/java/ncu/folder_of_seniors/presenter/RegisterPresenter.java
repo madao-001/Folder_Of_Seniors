@@ -15,6 +15,7 @@ import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
 import ncu.folder_of_seniors.model.Lisentener.RegisterLisentener;
 import ncu.folder_of_seniors.model.LoginModel;
 import ncu.folder_of_seniors.model.RegisterModel;
+import ncu.folder_of_seniors.module.entity.User;
 import ncu.folder_of_seniors.module.ui.view.LoginView;
 import ncu.folder_of_seniors.module.ui.view.RegisterView;
 import ncu.folder_of_seniors.presenter.impl.LoginPresenterImpl;
@@ -51,6 +52,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
             return "两次输入密码不一致！";
         }else if(Verify.isStrEmpty(school)){
             return "请输入学校名称！";
+        }else if(!Verify.isChinese(school)){
+            return "请输入正确的学校名称！";
         }else if(sex == null){
             return "请选择性别！";
         }else if(Verify.isStrEmpty(smsCode)){
@@ -106,22 +109,32 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
 
     @Override
     public void registerWithPhone(String smsCode) {
-        BmobUser user = getView().getUser();
+        User user = getView().getUser();
         getModel().verifySmsCode(user.getMobilePhoneNumber(), smsCode, new BaseLisentener() {
             @Override
             public void onSeccess() {
-                getModel().registerByPhone(user,smsCode,new RegisterLisentener() {
+                getModel().uploadIcon(user.getIcon(), new RegisterLisentener() {
                     @Override
                     public void onSeccess(String msg) {
-                        getView().onRegisterSeccess(msg);
+                        user.setIcon(msg);
+                        getModel().registerByPhone(user,smsCode,new RegisterLisentener() {
+                            @Override
+                            public void onSeccess(String msg) {
+                                getView().onRegisterSeccess(msg);
+                            }
+                            @Override
+                            public void onFails(String msg) {
+                                getView().onRegisterFails(msg);
+                            }
+                        });
                     }
+
                     @Override
                     public void onFails(String msg) {
                         getView().onRegisterFails(msg);
                     }
                 });
             }
-
             @Override
             public void onFails(String msg) {
                 getView().onRegisterFails(msg);
@@ -131,11 +144,22 @@ public class RegisterPresenter extends BasePresenter<RegisterView, RegisterModel
 
     @Override
     public void registerWithEmail() {
-        BmobUser user = getView().getUser();
-        getModel().registerByEmail(user, new RegisterLisentener() {
+        User user = getView().getUser();
+        getModel().uploadIcon(user.getIcon(), new RegisterLisentener() {
             @Override
             public void onSeccess(String msg) {
-                getView().onRegisterSeccess(msg);
+                user.setIcon(msg);
+                getModel().registerByEmail(user, new RegisterLisentener() {
+                    @Override
+                    public void onSeccess(String msg) {
+                        getView().onRegisterSeccess(msg);
+                    }
+
+                    @Override
+                    public void onFails(String msg) {
+                        getView().onRegisterFails(msg);
+                    }
+                });
             }
 
             @Override

@@ -43,7 +43,7 @@ public class FouthFModel extends BaseModel implements FouthFModelImpl {
             @Override
             public void done(final List<Follow> list, BmobException e) {
                 if (e==null){
-                    if(list!=null){
+                    if(list.size()!=0){
                         follow_objectid=list.get(0).getObjectId();
                         BmobQuery<User> query2 = new BmobQuery<User>();
                         Follow follow=new Follow();

@@ -1,10 +1,19 @@
 package ncu.folder_of_seniors.module.ui.activity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +27,10 @@ import android.widget.Toolbar;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,8 +52,11 @@ import ncu.folder_of_seniors.module.ui.fragment.ThirdFragment;
 import ncu.folder_of_seniors.module.ui.view.RegisterView;
 import ncu.folder_of_seniors.presenter.RegisterPresenter;
 import ncu.folder_of_seniors.utils.ToastEx;
+import ncu.folder_of_seniors.utils.UtilTools;
+import ncu.folder_of_seniors.utils.Utils;
 import ncu.folder_of_seniors.utils.Verify;
 
+import static com.yalantis.ucrop.util.FileUtils.getPath;
 import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 import static ncu.folder_of_seniors.app.MyApplication.fetchUserInfo;
 import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
@@ -129,13 +145,14 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
     }
 
     @Override
-    public BmobUser getUser() {
+    public User getUser() {
         String phoneNo = no.getText().toString();
         String pwd= password.getText().toString();
         Integer age = Integer.parseInt(Age.getText().toString());
         String username = name.getText().toString();
         String mail = no.getText().toString();
         String school = et_school.getText().toString();
+        String icon = imageTranslatePath(R.drawable.defult_icon);
         User user = new User();
         if(type.equals("手机号注册")){
             user.setUsername(username);
@@ -145,6 +162,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setOnline(true);
             user.setSchool(school);
             user.setSex(sex);
+            user.setIcon(icon);
             user.setPoints(100);
         }else if(type.equals("邮箱注册")){
             user.setUsername(username);
@@ -154,6 +172,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
             user.setOnline(true);
             user.setSchool(school);
             user.setSex(sex);
+            user.setIcon(icon);
             user.setPoints(100);
         }
         return user;
@@ -168,6 +187,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                 onChangeDataInUI(FouthFragment.class.getName());
                 onChangeDataInUI(SecondFragment.class.getName());
                 onChangeDataInUI(ThirdFragment.class.getName());
+                dismissLoadingDialog();
                 finish();
             }
 
@@ -217,6 +237,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                 String smscode = smsCode.getText().toString();
                 String school = et_school.getText().toString();
                 String mail = no.getText().toString();
+                showLoadingDialog();
                 if(type.equals("手机号注册")){
                     String msg = mPresenter.userVerifyWithPhone(username,pwd,pwd2,age,sex,phoneNo,smscode,school);
                     if(msg.equals("SUCCESS")){
@@ -237,4 +258,32 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
                 break;
         }
     }
+
+    private String imageTranslatePath(int resId) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(),resId);
+        try { // 获取SDCard指定目录下
+            String sdCardDir = Environment.getExternalStorageDirectory() + "/Folder_Of_Seniors/";
+            Log.e("savePic","start2");
+            File dirFile = new File(sdCardDir);  //目录转化成文件夹
+            if (!dirFile.exists()) {              //如果不存在，那就建立这个文件夹
+                dirFile.mkdirs();
+            }                          //文件夹有啦，就可以保存图片啦
+            File file = new File(sdCardDir, "defult_icon.jpg");// 在SDcard的目录下创建图片文,以当前时间为其命名
+            Log.e("savePic","start3");
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//            System.out.println("_________保存到____sd______指定目录文件夹下____________________");
+            Log.e("saveBitMap", "saveBitmap: 图片保存到" + Environment.getExternalStorageDirectory() + "/Folder_Of_Seniors/" + "defult_icon.jpg");
+            String FilePath = Environment.getExternalStorageDirectory() + "/Folder_Of_Seniors/" + "defult_icon.jpg";
+            out.flush();
+            out.close();
+            return FilePath;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }
