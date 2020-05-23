@@ -3,6 +3,7 @@ package ncu.folder_of_seniors.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,23 +16,31 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.newim.BmobIM;
 import cn.bmob.newim.bean.BmobIMUserInfo;
 import cn.bmob.newim.core.ConnectionStatus;
 import cn.bmob.newim.listener.ConnectListener;
 import cn.bmob.newim.listener.ConnectStatusChangeListener;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import jackmego.com.jieba_android.JiebaSegmenter;
 import ncu.folder_of_seniors.model.Lisentener.BaseLisentener;
+import ncu.folder_of_seniors.module.entity.Resource;
+import ncu.folder_of_seniors.module.entity.Reviews;
 import ncu.folder_of_seniors.module.entity.User;
+import ncu.folder_of_seniors.module.entity.UserAction;
 import ncu.folder_of_seniors.module.event.RefreshEvent;
 import ncu.folder_of_seniors.module.receiver.MyMessageHandler;
+import ncu.folder_of_seniors.utils.ToastEx;
 import ncu.folder_of_seniors.utils.Verify;
 
+import static cn.bmob.newim.core.BmobIMClient.getContext;
 import static ncu.folder_of_seniors.utils.StaticClass.IS_LOGIN;
 
 /**
@@ -43,6 +52,10 @@ public class MyApplication extends Application {
     public static Context appContext;
     public static ArrayList<Activity> activityList = new ArrayList<Activity>();
     public static MyApplication clientApp;
+    public static ArrayList<UserAction> userActions = new ArrayList<>();        //所有用户行为列表
+    public static ArrayList<User> users = new ArrayList<>();                   //所有用户列表
+    public static ArrayList<Resource> resources = new ArrayList<>();               //所有论文列表
+    public static ArrayList<Reviews> reviews = new ArrayList<>();               //所有评价列表
     public static User clientUser;//当前登录用户
 
     @Override

@@ -64,6 +64,7 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
         public final TextView time;
         public final Button download;
         public final TextView messeage;
+        public final TextView review;
 
         public VH(View view) {
             super(view);
@@ -73,6 +74,7 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
             time = (TextView) view.findViewById(R.id.my_selled_bought_tv_time);
             download = (Button) view.findViewById(R.id.my_selled_bought_bt_download);
             messeage = (TextView) view.findViewById(R.id.my_selled_bought_tv_message);
+            review = (TextView)view.findViewById(R.id.my_selled_bought_bt_review);
         }
     }
 
@@ -88,14 +90,15 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
         //设置数据
         data = mDatas.get(position);
         resource=data.getResource();
+        holder.review.setVisibility(View.GONE);
+        holder.download.setVisibility(View.GONE);
         //构造聊天方的用户信息:传入用户id、用户名和用户头像三个参数
-        info = new BmobIMUserInfo(data.getUser().getObjectId(), data.getUser().getUsername(), data.getUser().getIcon());
         if(resource!=null){
             if(resource.getPhotos()!=null&&resource.getPrice()!=null&&resource.getTitle()!=null){
                 holder.title.setText(resource.getTitle());
                 holder.messeage.setText("联系买家");
                 holder.price.setText("￥"+resource.getPrice());
-                holder.time.setText("发布于："+resource.getCreatedAt());
+                holder.time.setText("卖出于："+data.getCreatedAt());
                 Glide.with(mContext).load(resource.getPhotos().get(0)).into(holder.image);
             }else {
                 holder.title.setText("该商品已删除");
@@ -108,6 +111,8 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
             @Override
             public void onClick(View v) {
                 //在这里跳转到和卖家聊天页面
+                int positon = holder.getLayoutPosition();
+                info = new BmobIMUserInfo(mDatas.get(positon).getUser().getObjectId(), mDatas.get(positon).getUser().getUsername(), mDatas.get(positon).getUser().getIcon());
                 BmobIMConversation conversationEntrance = BmobIM.getInstance().startPrivateConversation(info, null);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("c", conversationEntrance);
@@ -129,30 +134,6 @@ public class MySelledAdapter extends RecyclerView.Adapter<MySelledAdapter.VH>imp
             }
         });
 
-        holder.download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLoadingDialog();
-                BmobFile bmobFile = mDatas.get(position).getResource().getFile();
-                File saveFile = new File(Environment.getExternalStorageDirectory(), bmobFile.getFilename());
-                bmobFile.download(saveFile, new DownloadFileListener() {
-                    @Override
-                    public void done(String savePath, BmobException e) {
-                        if(e==null){
-                            dismissLoadingDialog();
-                            Toast.makeText(mContext,"下载成功,保存路径:"+savePath,Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(mContext,"下载失败："+e.getErrorCode()+","+e.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onProgress(Integer value, long total) {
-
-                    }
-                });
-            }
-        });
     }
 
     @Override

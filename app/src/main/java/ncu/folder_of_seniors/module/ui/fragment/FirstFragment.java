@@ -25,6 +25,10 @@ import ncu.folder_of_seniors.module.ui.activity.SearchActivity;
 import ncu.folder_of_seniors.module.ui.adapter.FirstFAdapter;
 import ncu.folder_of_seniors.module.ui.view.FirstFView;
 import ncu.folder_of_seniors.presenter.FirstFPresenter;
+import ncu.folder_of_seniors.utils.ItemCFRecommend;
+import ncu.folder_of_seniors.utils.UserCFRecommend;
+
+import static ncu.folder_of_seniors.app.MyApplication.clientUser;
 
 
 public class FirstFragment extends BaseFragment implements FirstFAdapter.Callback, FirstFView {
@@ -76,7 +80,11 @@ public class FirstFragment extends BaseFragment implements FirstFAdapter.Callbac
 
     @Override
     protected void initData() {
-        mPresenter.getData();
+        if(clientUser==null)
+            mPresenter.getData();
+        else{
+            mPresenter.getAllData();
+        }
     }
 
     @Override
@@ -139,6 +147,13 @@ public class FirstFragment extends BaseFragment implements FirstFAdapter.Callbac
     public void showData(List<Resource> list) {
         mList.clear();
         mList.addAll(list);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAllData() {
+        mList.clear();
+        mList.addAll(UserCFRecommend.recommend(clientUser));
         adapter.notifyDataSetChanged();
     }
 

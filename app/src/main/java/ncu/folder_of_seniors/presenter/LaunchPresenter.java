@@ -58,6 +58,4 @@ public class LaunchPresenter extends BasePresenter<LaunchView, LaunchModel> impl
         });
     }
 
-
-
 }

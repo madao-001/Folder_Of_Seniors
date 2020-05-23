@@ -86,7 +86,7 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
                 if (e == null) {
                     lisentener.onSeccess("新增成功:" + objectId);
                 } else {
-                    Log.e("BMOB", e.toString());
+                    Log.e("BmobAction", e.toString());
                     lisentener.onFails(e.getMessage());
                 }
             }
@@ -109,9 +109,9 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
                             public void done(BmobException e) {
                                 if (e == null) {
                                     lisentener.onSeccess("删除" + list.get(0).getObjectId() + "成功");
-                                    Log.e("bmob", "删除" + list.get(0).getObjectId() + "成功");
+                                    Log.e("BmobAction", "删除" + list.get(0).getObjectId() + "成功");
                                 } else {
-                                    Log.e("bmob", "删除" + list.get(0).getObjectId() + "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                    Log.e("BmobAction", "删除" + list.get(0).getObjectId() + "失败：" + e.getMessage() + "," + e.getErrorCode());
                                     lisentener.onFails(e.getMessage());
                                 }
                             }
@@ -153,7 +153,7 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
                 @Override
                 public void done(Object object, BmobException e) {
                     if (e == null){
-                        Log.e("Bmob", "Succeed1: " + object);
+                        Log.e("BmobAction", "Succeed1: " + object);
                         JSONObject params2 = new JSONObject();
                         try {
                             params2.put("userId",resource.getCreator().getObjectId());
@@ -164,10 +164,11 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
                                 @Override
                                 public void done(Object object, BmobException e) {
                                     if (e == null) {
-                                        Log.e("Bmob", "Succeed2: " + object);
+                                        Log.e("BmobAction", "Succeed2: " + object);
+                                        lisentener.onSeccess();
                                     } else {
                                         lisentener.onFails(e.getMessage());
-                                        Log.e("Bmob", "Failed: " + e);
+                                        Log.e("BmobAction", "Failed: " + e);
                                     }
                                 }
                             });
@@ -177,7 +178,7 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
                     }
                     else{
                         lisentener.onFails(e.getMessage());
-                        Log.e("Bmob", "Failed: " + e);
+                        Log.e("BmobAction", "Failed: " + e);
                     }
                 }
             });

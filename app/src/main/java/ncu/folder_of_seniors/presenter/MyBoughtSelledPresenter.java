@@ -27,11 +27,12 @@ public class MyBoughtSelledPresenter extends BasePresenter<MyBoughtSelledView, M
 
     @Override
     public void getData(String type, User user) {
+        userActions.clear();
         getModel().getData(type, user, new MyBoughtSelledLisentener() {
             @Override
             public void onSeccess(List<UserAction> userActionList) {
                 userActions.addAll(userActionList);
-                getView().showData(userActionList);
+                getView().showData(userActions);
             }
 
             @Override

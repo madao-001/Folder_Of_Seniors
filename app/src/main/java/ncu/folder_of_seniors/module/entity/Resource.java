@@ -19,6 +19,7 @@ public class Resource extends BmobObject {
     private String school;
     private List<String> photos=new ArrayList<>();
     private BmobFile file;
+    private Double similarity;//相似度
 
     public String getTitle() {
         return title;
@@ -116,6 +117,15 @@ public class Resource extends BmobObject {
 
     public Resource setGrade(Double grade) {
         this.grade = grade;
+        return this;
+    }
+
+    public Double getSimilarity() {
+        return similarity;
+    }
+
+    public Resource setSimilarity(Double similarity) {
+        this.similarity = similarity;
         return this;
     }
 }

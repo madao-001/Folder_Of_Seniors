@@ -4,7 +4,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobObject;
 
-public class Reviews extends BmobObject {
+public class Reviews extends BmobObject implements Comparable<Reviews>{
     private Resource resource;
     private User user;
     private Integer grade;
@@ -54,5 +54,10 @@ public class Reviews extends BmobObject {
     public Reviews setPhotos(List<String> photos) {
         this.photos = photos;
         return this;
+    }
+
+    @Override
+    public int compareTo(Reviews o) {
+        return grade > o.getGrade() ? -1 : 1;
     }
 }

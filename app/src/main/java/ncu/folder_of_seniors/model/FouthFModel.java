@@ -130,7 +130,7 @@ public class FouthFModel extends BaseModel implements FouthFModelImpl {
 
             @Override
             public void onProgress(Integer value, long newworkSpeed) {
-                Log.e("bmob","下载进度："+value+","+newworkSpeed);
+                Log.e("BmobAction","下载进度："+value+","+newworkSpeed);
             }
 
         });

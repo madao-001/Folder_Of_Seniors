@@ -72,14 +72,11 @@ public class ReviewModel extends BaseModel implements ReviewModelImpl {
                                                                     public void done(List<Reviews> object, BmobException e) {
                                                                         if(e==null){
                                                                             if(object!=null){
-                                                                                int sum=0;
+                                                                                Double sum=0.0;
                                                                                 for(int i=0;i<object.size();i++){
                                                                                     sum = sum+object.get(i).getGrade();
                                                                                 }
-                                                                                Integer grade = reviews.getGrade();
-                                                                                Integer a = sum+grade;
-                                                                                Double b = object.size()+1.0;
-                                                                                Double score = a/b;
+                                                                                Double score = sum/object.size();
                                                                                 resource.setGrade(score);
                                                                                 resource.update(resource.getObjectId(), new UpdateListener() {
                                                                                     @Override
@@ -145,7 +142,7 @@ public class ReviewModel extends BaseModel implements ReviewModelImpl {
                             public void done(List<UserAction> object, BmobException e) {
                                 if(e==null){
                                     if(object==null){
-                                        Log.e("error","useraction查询失败");
+                                        Log.e("error","userAction查询失败");
                                     }else {
                                         object.get(0).setGrade(reviews.getGrade());
                                         object.get(0).update(object.get(0).getObjectId(), new UpdateListener() {
@@ -161,14 +158,11 @@ public class ReviewModel extends BaseModel implements ReviewModelImpl {
                                                         public void done(List<Reviews> object, BmobException e) {
                                                             if(e==null){
                                                                 if(object!=null){
-                                                                    int sum=0;
+                                                                    Double sum=0.0;
                                                                     for(int i=0;i<object.size();i++){
                                                                         sum = sum+object.get(i).getGrade();
                                                                     }
-                                                                    Double grade = resource.getGrade();
-                                                                    Double a = sum+grade;
-                                                                    Double b = object.size()+1.0;
-                                                                    Double score = a/b;
+                                                                    Double score = sum/object.size();
                                                                     resource.setGrade(score);
                                                                     resource.update(resource.getObjectId(), new UpdateListener() {
                                                                         @Override

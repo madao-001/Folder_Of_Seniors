@@ -92,7 +92,6 @@ public class MyBoughtAdapter extends RecyclerView.Adapter<MyBoughtAdapter.VH>imp
         data = mDatas.get(position);
         resource=data.getResource();
         //构造聊天方的用户信息:传入用户id、用户名和用户头像三个参数
-        info = new BmobIMUserInfo(resource.getCreator().getObjectId(), resource.getCreator().getUsername(), resource.getCreator().getIcon());
         if(resource!=null){
             if(resource.getPhotos()!=null&&resource.getPrice()!=null&&resource.getTitle()!=null){
                 holder.title.setText(resource.getTitle());
@@ -113,6 +112,8 @@ public class MyBoughtAdapter extends RecyclerView.Adapter<MyBoughtAdapter.VH>imp
             @Override
             public void onClick(View v) {
                //在这里跳转到和卖家聊天页面
+                int positon = holder.getLayoutPosition();
+                info = new BmobIMUserInfo(mDatas.get(positon).getResource().getCreator().getObjectId(), mDatas.get(positon).getResource().getCreator().getUsername(), mDatas.get(positon).getResource().getCreator().getIcon());
                 BmobIMConversation conversationEntrance = BmobIM.getInstance().startPrivateConversation(info, null);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("c", conversationEntrance);
@@ -126,7 +127,8 @@ public class MyBoughtAdapter extends RecyclerView.Adapter<MyBoughtAdapter.VH>imp
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Resource resource = mDatas.get(position).getResource();
+                int positon = holder.getLayoutPosition();
+                Resource resource = mDatas.get(positon).getResource();
                 //Toast.makeText(mContext,"name is "+sell.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, ResourceDetailsActivity.class);
                 intent.putExtra("objectId", resource.getObjectId());
@@ -138,7 +140,8 @@ public class MyBoughtAdapter extends RecyclerView.Adapter<MyBoughtAdapter.VH>imp
             @Override
             public void onClick(View v) {
                 showLoadingDialog();
-                BmobFile bmobFile = mDatas.get(position).getResource().getFile();
+                int positon = holder.getLayoutPosition();
+                BmobFile bmobFile = mDatas.get(positon).getResource().getFile();
                 File saveFile = new File(Environment.getExternalStorageDirectory(), bmobFile.getFilename());
                 bmobFile.download(saveFile, new DownloadFileListener() {
                     @Override
@@ -162,9 +165,12 @@ public class MyBoughtAdapter extends RecyclerView.Adapter<MyBoughtAdapter.VH>imp
         holder.review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int positon = holder.getLayoutPosition();
+                data = mDatas.get(positon);
                 if(data.getGrade()==null){
                     Intent i = new Intent(mContext, ReviewActivity.class);
-                    i.putExtra("resourceId",mDatas.get(position).getObjectId());
+                    String resourceId = data.getResource().getObjectId();
+                    i.putExtra("objectId",resourceId);
                     mContext.startActivity(i);
                 }else
                     Toast.makeText(mContext,"已经评价过该资源！", Toast.LENGTH_SHORT).show();

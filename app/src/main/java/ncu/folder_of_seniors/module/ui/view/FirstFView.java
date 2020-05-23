@@ -12,6 +12,10 @@ public interface FirstFView extends BaseView {
      */
     void showData(List<Resource> list);
     /**
+     * 当数据请求成功，调用此接口提示
+     */
+    void showAllData();
+    /**
      * 当数据请求异常，调用此接口提示
      */
     void showErrorMessage(String msg);

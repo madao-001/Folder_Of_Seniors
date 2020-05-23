@@ -9,4 +9,9 @@ public interface FirstFPresenterImpl extends BasePresenterImpl {
      */
     public void getData();
 
+    /**
+     * 获取数据
+     */
+    public void getAllData();
+
 }

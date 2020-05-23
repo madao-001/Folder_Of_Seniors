@@ -28,7 +28,7 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
     private int length = 0;
     @Override
     public void getData(String type, User user, MyBoughtSelledLisentener lisentener) {
-        if(!type.equals("")){
+        if(type.equals("buy")){
             BmobQuery<UserAction> query = new BmobQuery<UserAction>();
             query.include("resource.creator,user");
             //按照时间降序
@@ -59,11 +59,11 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
                 public void done(List<Resource> list, BmobException e) {
                     if(e==null){
                         if(list.size()!=0){
-                            tag = 0;
+                            tag = 1;
                             length = list.size();
                             for(int i=0;i<list.size();i++){
                                 BmobQuery<UserAction> query2 = new BmobQuery<UserAction>();
-                                query.include("resource.creator,user");
+                                query2.include("resource.creator,user");
                                 query2.order("-createdAt");
                                 query2.addWhereEqualTo("resource", list.get(i));
                                 query2.addWhereEqualTo("actionType", "buy");
@@ -72,7 +72,7 @@ public class MyBoughtSelledModel extends BaseModel implements MyBoughtSelledMode
                                     public void done(List<UserAction> object, BmobException e) {
                                         if(e==null){
                                             if(object.size()!=0){
-                                                if(tag==--length){
+                                                if(tag==length){
                                                     lisentener.onSeccess(object);
                                                 }else{
                                                     lisentener.onProgress(object);

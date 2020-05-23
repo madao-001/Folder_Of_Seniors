@@ -67,27 +67,30 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                 getModel().changeLike(resource, 1, new RegisterLisentener() {
                     @Override
                     public void onSeccess(String msg) {
-
+                        Log.e("BmobAction", "ChangeLike Success!");
                     }
 
                     @Override
                     public void onFails(String msg) {
                         getView().showErrorMessage(msg);
+                        Log.e("BmobAction", "ChangeLike Fail!");
                     }
                 });
             }else if(type.equals("buy")){
                 getModel().updatePoints(user.getObjectId(), resource, new BaseLisentener() {
                     @Override
                     public void onSeccess() {
+                        Log.e("BmobAction", "UpdatePoints Success!");
                         getModel().updateResource(resource, new BaseLisentener() {
                             @Override
                             public void onSeccess() {
-
+                                Log.e("BmobAction", "UpdateResource Success!");
                             }
 
                             @Override
                             public void onFails(String msg) {
                                 getView().showErrorMessage(msg);
+                                Log.e("BmobAction", "UpdateResource Fail!");
                             }
                         });
                     }
@@ -95,6 +98,7 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                     @Override
                     public void onFails(String msg) {
                         getView().showErrorMessage("购买失败："+msg);
+                        Log.e("BmobAction", "UpdatePoints Fail!");
                     }
                 });
             }
@@ -102,11 +106,13 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                 @Override
                 public void onSeccess(String msg) {
                     getView().showActionResult(type,isAdd);
+                    Log.e("BmobAction", "SetUserAction Success!!");
                 }
 
                 @Override
                 public void onFails(String msg) {
                     getView().showErrorMessage(msg);
+                    Log.e("BmobAction", "SetUserAction Fail!");
                 }
             });
         }else {
