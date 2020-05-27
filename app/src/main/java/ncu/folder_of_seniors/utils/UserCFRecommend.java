@@ -19,31 +19,116 @@ import static ncu.folder_of_seniors.app.MyApplication.reviews;
 import static ncu.folder_of_seniors.app.MyApplication.users;
 
 public class UserCFRecommend {
+    static int K = 5;
     /**
-     * 在给定username的情况下，计算其他用户和它的距离并排序
+     * 在给定userid的情况下，计算其他用户和它的余弦相似度并排序
      * @param user
-     * @return
+     * @return Map<Double, String> Neighbors
      */
     public static Map<Double, String> computeNearestNeighbor(User user) {
+        /**
+         * 目标用户和其他用户的余弦相似度图
+         * @param distance
+         * @param userid
+         */
         Map<Double, String> distances = new TreeMap<>();
-        ArrayList<Reviews> reviews1 = new ArrayList<>();
-        ArrayList<Reviews> reviews2 = new ArrayList<>();
+        /**
+         * 目标用户的评价图
+         * @param itemid
+         * @param grade
+         */
+        Map<String, Double> reviews_userA = new HashMap<>();
+        /**
+         * 其他用户的评价图
+         * @param itemid
+         * @param grade
+         */
+        Map<String, Double> reviews_userB = new HashMap<>();
+        /**
+         * 所有用户的平均评分图
+         * @param userid
+         * param {grade,num}
+         */
+        Map<String, Object> reviwsAve = new HashMap<>();
+        //获取所有用户的平均评分图
+        for(Reviews review:reviews){
+            if(reviwsAve.get(review.getUser().getObjectId())==null){
+                List<Integer> list = new ArrayList<Integer>();
+                list.add(review.getGrade());
+                list.add(1);
+                reviwsAve.put(review.getUser().getObjectId(), list);
+            }else{
+                List<Integer> list = (List<Integer>)reviwsAve.get(review.getUser().getObjectId());
+                list.set(0,review.getGrade()+list.get(0));
+                list.set(1,list.get(1)+1);
+                reviwsAve.put(review.getUser().getObjectId(), list);
+            }
+        }
         for (int i = 0; i < users.size(); i++) {
             User user1 = users.get(i);
-            reviews1.clear();
-            reviews2.clear();
+            reviews_userA.clear();//目标用户评分矩阵
+            reviews_userB.clear();//其他用户评分矩阵
             if (!user1.getObjectId().equals(user.getObjectId())) {
                 for(Reviews review:reviews){
                     if(review.getUser().getObjectId().equals(user.getObjectId()))
-                        reviews1.add(review);
+                        reviews_userA.put(review.getResource().getObjectId(),review.getGrade()*1.0);
                     else if(review.getUser().getObjectId().equals(user1.getObjectId()))
-                        reviews2.add(review);
+                        reviews_userB.put(review.getResource().getObjectId(),review.getGrade()*1.0);
                 }
-                if(reviews1.size()==0)
-                    return null;
-                if(reviews2.size()==0)
+                if(reviews_userA.size()==0||reviews_userB.size()==0)
                     continue;
-                double distance = pearson_dis(reviews1, reviews2);
+                boolean is_intersect=false;
+                for(String itemid : reviews_userA.keySet()){
+                    if(reviews_userB.get(itemid)!=null){
+                        //判断两个用户的评分集合是否有交集
+                        is_intersect=true;
+                    }
+                    if(reviews_userB.get(itemid)==null){
+                        //矩阵填充
+                        double grade_pre = 0;
+                        double grade_ave = 0;
+                        List<Integer> list = (List<Integer>)reviwsAve.get(user.getObjectId());
+                        grade_ave = list.get(0)/list.get(1);
+                        int num = 0;
+                        double grade_sum = 0;
+                        for(Reviews review:reviews){
+                            if(review.getResource().getObjectId().equals(itemid)){
+                                num++;
+                                double grade = review.getGrade();
+                                List<Integer> list1 = (List<Integer>)reviwsAve.get(review.getUser().getObjectId());
+                                double ave_grade = list.get(0)/list.get(1);
+                                grade_sum += grade - ave_grade;
+                            }
+                        }
+                        grade_pre = grade_ave + grade_sum/num;
+                        reviews_userB.put(itemid, grade_pre);
+                    }
+                }
+                for(String itemid : reviews_userB.keySet()){
+                    if(reviews_userA.get(itemid)==null){
+                        //矩阵填充
+                        double grade_pre = 0;
+                        double grade_ave = 0;
+                        List<Integer> list = (List<Integer>)reviwsAve.get(user.getObjectId());
+                        grade_ave = list.get(0)/list.get(1);
+                        int num = 0;
+                        double grade_sum = 0;
+                        for(Reviews review:reviews){
+                            if(review.getResource().getObjectId().equals(itemid)){
+                                num++;
+                                double grade = review.getGrade();
+                                List<Integer> list1 = (List<Integer>)reviwsAve.get(review.getUser().getObjectId());
+                                double ave_grade = list.get(0)/list.get(1);
+                                grade_sum += grade - ave_grade;
+                            }
+                        }
+                        grade_pre = grade_ave + grade_sum/num;
+                        reviews_userA.put(itemid, grade_pre);
+                    }
+                }
+                if(!is_intersect)
+                    continue;
+                double distance = cos_dis(reviews_userA, reviews_userB);
                 distances.put(distance, user1.getObjectId());
             }
         }
@@ -52,87 +137,109 @@ public class UserCFRecommend {
     }
 
     /**
-     * 计算2个打分序列间的pearson距离
+     * 计算2个用户评分矩阵间的余弦相似度
      *
-     * @param reviews1
-     * @param reviews2
+     * @param mapA
+     * @param mapB
      * @return
      */
-    public static double pearson_dis(List<Reviews> reviews1, List<Reviews> reviews2) {
+    public static double cos_dis(Map<String, Double> mapA, Map<String, Double> mapB) {
         int sum_xy = 0;
-        int sum_x = 0;
-        int sum_y = 0;
         double sum_x2 = 0;
         double sum_y2 = 0;
         int n = 0;
-        for (int i = 0; i < reviews1.size(); i++) {
-            Reviews key1 = reviews1.get(i);
-            for (int j = 0; j < reviews2.size(); j++) {
-                Reviews key2 = reviews2.get(j);
-                if (key1.getResource().getObjectId().equals(key2.getResource().getObjectId())) {
+        for (Map.Entry<String, Double> entryA : mapA.entrySet()) {
+            for (Map.Entry<String, Double> entryB : mapB.entrySet()) {
+                if(entryA.getKey()==entryB.getKey()){
                     n += 1;
-                    int x = key1.getGrade();
-                    int y = key2.getGrade();
+                    double x = entryA.getValue();
+                    double y = entryB.getValue();
                     sum_xy += x * y;
-                    sum_x += x;
-                    sum_y += y;
                     sum_x2 += Math.pow(x, 2);
                     sum_y2 += Math.pow(y, 2);
                 }
-
             }
         }
-        double denominator = Math.sqrt(sum_x2 - Math.pow(sum_x, 2) / n) * Math.sqrt(sum_y2 - Math.pow(sum_y, 2) / n);
+        double denominator = sum_xy / (Math.sqrt(sum_x2) * Math.sqrt(sum_y2));
         if (denominator == 0||n == 0) {
             return 0;
         } else {
-            return (sum_xy - (sum_x * sum_y) / n) / denominator;
+            return denominator;
         }
     }
 
     public static List<Resource> recommend(User user) {
+        //存放预测评分列表
+        Map<String, Object> recommendMap = new HashMap<>();
         ArrayList<Resource> recomLists = new ArrayList<>();      //生成的推荐结果
         //找到最近邻
         if(computeNearestNeighbor(user)!=null&&computeNearestNeighbor(user).size()!=0){
             Map<Double, String> distances = computeNearestNeighbor(user);
-            String nearest = distances.values().iterator().next();
-            Log.e("UserCF:","nearest -> " + nearest);
-            List<Reviews> recommendations = new ArrayList<>();
-
-            //找到最近邻看过，但是我们没看过的电影，计算推荐
-            List<Reviews> neighborRatings = new ArrayList<>();
+            //找到最近邻买过，但是该用户没买过的资源，计算评分预测
             List<Reviews> userRatings = new ArrayList<>();
             for(Reviews review:reviews){
-                if(review.getUser().getObjectId().equals(nearest))
-                    neighborRatings.add(review);
-                else if(review.getUser().getObjectId().equals(user.getObjectId()))
+                if(review.getUser().getObjectId().equals(user.getObjectId()))
                     userRatings.add(review);
-            }
-            Log.e("UserCF:","neighborRatings -> " + neighborRatings);
-            Log.e("UserCF:","userRatings -> " + userRatings);
-
-            for (Reviews review1 : neighborRatings) {
-                Boolean isExit = false;
-                for(Reviews review2:userRatings){
-                    if(review2.getResource().getObjectId().equals(review1.getResource().getObjectId()))
-                        isExit = true;
+                else {
+                    for(Map.Entry<Double, String> entry : distances.entrySet()){
+                        if(--K<0)
+                            break;
+                        if(review.getUser().getObjectId().equals(entry.getValue())){
+                            if(recommendMap.get(review.getResource().getObjectId())==null){
+                                List<Double> doubleList = new ArrayList<>();
+                                double grade = 0;
+                                doubleList.add(0,entry.getKey());//存放相似度的和
+                                for(Reviews review2:reviews){
+                                    if(review2.getUser().getObjectId().equals(entry.getValue())&&review2.getResource().getObjectId().equals(review.getResource().getObjectId())){
+                                        grade = review2.getGrade();
+                                    }
+                                }
+                                grade = grade*entry.getKey();
+                                doubleList.add(1,grade);//存放预测评分的和
+                                recommendMap.put(entry.getValue(),doubleList);
+                            }else {
+                                List<Double> doubleList = (List<Double>)recommendMap.get(review.getResource().getObjectId());
+                                double grade = 0;
+                                doubleList.set(0,entry.getKey()+doubleList.get(0));//存放相似度的和
+                                for(Reviews review2:reviews){
+                                    if(review2.getUser().getObjectId().equals(entry.getValue())&&review2.getResource().getObjectId().equals(review.getResource().getObjectId())){
+                                        grade = review2.getGrade();
+                                    }
+                                }
+                                grade = grade*entry.getKey();
+                                doubleList.add(1,grade+doubleList.get(1));//存放预测评分的和
+                                recommendMap.put(entry.getValue(),doubleList);
+                            }
+                        }
+                    }
                 }
-                if(!isExit)
-                    recommendations.add(review1);
             }
-            Collections.sort(recommendations);
+            for(Map.Entry<String, Object> entry : recommendMap.entrySet()){
+                for(Reviews review:userRatings){
+                    if(entry.getKey().equals(review.getResource().getObjectId())){
+                        recommendMap.remove(entry.getKey());
+                    }
+                }
+            }
+            Map<Double,String> recommendations = new TreeMap<>();
+            for(Map.Entry<String, Object> entry : recommendMap.entrySet()){
+                List<Double> list = (List<Double>)recommendMap.get(entry.getKey());
+                Double score = list.get(1)/list.get(0);
+                recommendations.put(score,entry.getKey());
+            }
 
-            for(Reviews review:recommendations){
+            for(Map.Entry<Double, String> entry : recommendations.entrySet()){
                 for(Resource resource:resources){
-                    if(review.getResource().getObjectId().equals(resource.getObjectId())){
+                    if(entry.getValue().equals(resource.getObjectId())){
+                        resource.setGrade(entry.getKey());
                         recomLists.add(resource);
                         break;
                     }
                 }
             }
-            if(recomLists.size()<3){
-                //推荐数量不满3个, 补足喜欢数最高的文章
-                while (recomLists.size()<3) {
+            if(recomLists.size()<5){
+                //推荐数量不满3个, 补足热度最高的文章
+                while (recomLists.size()<5) {
                     for (Resource resource : resources) {
                         Boolean isExit = false;
                         for (Resource resource1 : recomLists) {
@@ -147,7 +254,7 @@ public class UserCFRecommend {
                 }
             }
         }else {
-            while (recomLists.size()<3) {
+            while (recomLists.size()<5) {
                 for (Resource resource : resources) {
                     Boolean isExit = false;
                     for (Resource resource1 : recomLists) {
@@ -161,8 +268,7 @@ public class UserCFRecommend {
                 }
             }
         }
-        Log.e("UserCF:","recomLists -> " + recomLists.toString());
+        //Log.e("UserCF:","recomLists -> " + recomLists.toString());
         return recomLists;
     }
-
 }

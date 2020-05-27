@@ -7,7 +7,7 @@ import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
-public class Resource extends BmobObject {
+public class Resource extends BmobObject implements Comparable<Resource>{
     private String title;
     private String type;
     private String desc;
@@ -16,10 +16,12 @@ public class Resource extends BmobObject {
     private Integer price;
     private Integer likes;
     private Integer buyNo;
+    private Integer starNo;
     private String school;
     private List<String> photos=new ArrayList<>();
     private BmobFile file;
     private Double similarity;//相似度
+    private Integer hotpoint;//热度分
 
     public String getTitle() {
         return title;
@@ -127,5 +129,28 @@ public class Resource extends BmobObject {
     public Resource setSimilarity(Double similarity) {
         this.similarity = similarity;
         return this;
+    }
+
+    public Integer getHotpoint() {
+        return hotpoint;
+    }
+
+    public Resource setHotpoint(Integer hotpoint) {
+        this.hotpoint = hotpoint;
+        return this;
+    }
+
+    public Integer getStarNo() {
+        return starNo;
+    }
+
+    public Resource setStarNo(Integer starNo) {
+        this.starNo = starNo;
+        return this;
+    }
+
+    @Override
+    public int compareTo(Resource o) {
+        return hotpoint > o.getHotpoint() ? -1 : 1;
     }
 }

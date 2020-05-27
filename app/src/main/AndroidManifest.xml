@@ -116,7 +116,7 @@
         <service android:name="cn.bmob.newim.core.service.HeartBeatService" />
         <meta-data
             android:name="Bmob_APP_KEY"
-            android:value="9d71c7a739c158713d6ad5b0180ba640"/>
+            android:value="填自己的APP_KEY"/>
         <meta-data
             android:name="BMOB_PUSH_CLASS"
             android:value=".module.receiver.NetReceiver">

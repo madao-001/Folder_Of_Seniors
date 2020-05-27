@@ -18,6 +18,7 @@ public interface ResourceDetailsModelImpl {
     void setUserAction(UserAction action,RegisterLisentener lisentener);
     void deleteUserAction(UserAction action,RegisterLisentener lisentener);
     void changeLike(Resource resource,Integer num,RegisterLisentener lisentener);
+    void changeStar(Resource resource,Integer num,RegisterLisentener lisentener);
     void updatePoints(String userid,Resource resource, BaseLisentener lisentener);
     void updateResource(Resource resource,BaseLisentener lisentener);
 }

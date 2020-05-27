@@ -76,7 +76,20 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
                         Log.e("BmobAction", "ChangeLike Fail!");
                     }
                 });
-            }else if(type.equals("buy")){
+            } else if(type.equals("star")){
+                getModel().changeStar(resource, 1, new RegisterLisentener() {
+                    @Override
+                    public void onSeccess(String msg) {
+                        Log.e("BmobAction", "ChangeStar Success!");
+                    }
+
+                    @Override
+                    public void onFails(String msg) {
+                        getView().showErrorMessage(msg);
+                        Log.e("BmobAction", "ChangeStar Fail!");
+                    }
+                });
+            } else if(type.equals("buy")){
                 getModel().updatePoints(user.getObjectId(), resource, new BaseLisentener() {
                     @Override
                     public void onSeccess() {
@@ -118,6 +131,19 @@ public class ResourceDetailsPresenter extends BasePresenter<ResourceDetailsView,
         }else {
             if(type.equals("like")){
                 getModel().changeLike(resource, -1, new RegisterLisentener() {
+                    @Override
+                    public void onSeccess(String msg) {
+
+                    }
+
+                    @Override
+                    public void onFails(String msg) {
+                        getView().showErrorMessage(msg);
+                    }
+                });
+            }
+            if(type.equals("star")){
+                getModel().changeStar(resource, -1, new RegisterLisentener() {
                     @Override
                     public void onSeccess(String msg) {
 

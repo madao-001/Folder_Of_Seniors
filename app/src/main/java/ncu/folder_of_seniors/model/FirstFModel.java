@@ -2,6 +2,7 @@ package ncu.folder_of_seniors.model;
 
 import android.util.Log;
 
+import java.util.Collections;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -71,6 +72,13 @@ public class FirstFModel extends BaseModel implements FirstFModelImpl {
                     @Override
                     public void done(List<Resource> object, BmobException e) {
                         if (e == null) {
+                            for(Resource resource:object){
+                                int score = 100;
+                                int s_user = 5*resource.getLikes()+10*resource.getStarNo()+20*resource.getBuyNo();
+                                resource.setHotpoint(score+s_user);
+                            }
+                            //应用启动时计算资源热度并排序
+                            Collections.sort(object);
                             resources.clear();
                             resources.addAll(object);
                             Log.e("MyApplication:","查询所有资源成功"+resources.size());

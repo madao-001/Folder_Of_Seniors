@@ -155,6 +155,7 @@ public class LaunchActivity extends BaseActivity implements AdapterView.OnItemSe
                     resource.setType(mfenlei);
                     resource.setGrade(0.0);
                     resource.setBuyNo(0);
+                    resource.setStarNo(0);
                     resource.setSchool(clientUser.getSchool());
                     resource.setLikes(0);
                     mPresenter.launch(resource);

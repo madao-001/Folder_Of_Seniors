@@ -142,6 +142,22 @@ public class ResourceDetailsModel extends BaseModel implements ResourceDetailsMo
     }
 
     @Override
+    public void changeStar(Resource resource, Integer num, RegisterLisentener lisentener) {
+        resource.increment("starNo", num);
+        resource.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    lisentener.onSeccess("");
+                } else {
+                    lisentener.onFails(e.getMessage());
+                    Log.e("Error:", e.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
     public void updatePoints(String userid, Resource resource, BaseLisentener lisentener) {
         try {
             JSONObject params = new JSONObject();
